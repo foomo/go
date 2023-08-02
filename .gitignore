@@ -1,0 +1,20 @@
+.*
+*.log
+!.github/
+!.editorconfig
+!.gitignore
+!.golangci.yml
+!.goreleaser.yml
+!.husky.yaml
+
+### JetBrains ###
+.idea/
+
+### VisualStudioCode ###
+.vscode/
+
+### Custom ###
+
+/tmp/
+/coverage.out
+/coverage.html
