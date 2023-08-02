@@ -50,7 +50,7 @@ func skipTags(tags []tag.Tag) bool {
 		return true
 	}
 
-	envTags := os2.GetenvStrings(envTestTags, nil)
+	envTags := os2.GetenvStringSlice(envTestTags, nil)
 	// always return false if there are non tags defined
 	if envTags == nil {
 		return false
