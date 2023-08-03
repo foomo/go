@@ -5,8 +5,8 @@ linters-settings:
   importas:
     alias:
       # Enforce `x` suffix
-      - pkg: github\.com/foomo/go/(.*\/)?(\..*?|.*?)(\.[^.]*?)?(#.*$|\?.*$|$)
-        alias: "${2}x"
+      - pkg: github.com\/foomo\/go.*\/([^\/]+)\/?$
+        alias: "${1}x"
   depguard:
     rules:
       main:
