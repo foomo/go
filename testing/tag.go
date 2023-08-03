@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	os2 "github.com/foomo/go/os"
+	osx "github.com/foomo/go/os"
 	"github.com/foomo/go/testing/tag"
 )
 
@@ -50,28 +50,43 @@ func skipTags(tags []tag.Tag) bool {
 		return true
 	}
 
-	envTags := os2.GetenvStringSlice(envTestTags, nil)
+	envTags := osx.GetenvStringSlice(envTestTags, nil)
 	// always return false if there are non tags defined
 	if envTags == nil {
 		return false
 	}
 
 	// translate tags
+	allExclude := true
 	envTagsMap := make(map[tag.Tag]bool, len(tags))
 	for _, s := range envTags {
-		envTagsMap[tag.Tag(strings.TrimPrefix(s, "-"))] = !strings.HasPrefix(s, "-")
+		include := !strings.HasPrefix(s, "-")
+		envTagsMap[tag.Tag(strings.TrimPrefix(s, "-"))] = include
+		if include {
+			allExclude = false
+		}
 	}
 
 	var (
+		anyFound   bool
 		anyInclude bool
 		anyExclude bool
 	)
 	for _, v := range tags {
-		if v, ok := envTagsMap[v]; ok && v {
-			anyInclude = true
-		} else if ok && !v {
-			anyExclude = true
+		include, ok := envTagsMap[v]
+		if ok {
+			anyFound = true
+			if include {
+				anyInclude = true
+			} else {
+				anyExclude = true
+			}
 		}
 	}
+
+	if allExclude && !anyFound {
+		return false
+	}
+
 	return !(anyInclude && !anyExclude)
 }

@@ -1,4 +1,4 @@
-package testing
+package testing //nolint:testpackage
 
 import (
 	"os"
@@ -41,13 +41,13 @@ func Test_skipTags(t *testing.T) {
 			want: true,
 		},
 		{
-			name: "skip for short and integration",
+			name: "skip for integration,security and integration",
 			env:  "short",
 			tags: []tag.Tag{tag.Integration, tag.Security},
 			want: true,
 		},
 		{
-			name: "skip for short and integration,security",
+			name: "skip for integration,security and short",
 			env:  "short",
 			tags: []tag.Tag{tag.Integration, tag.Security},
 			want: true,
@@ -59,36 +59,36 @@ func Test_skipTags(t *testing.T) {
 			want: false,
 		},
 		{
-			name: "don't skip for integration and integration,security",
+			name: "don't skip for integration,security and integration",
 			env:  "integration",
 			tags: []tag.Tag{tag.Integration, tag.Security},
 			want: false,
 		},
 		{
-			name: "don't skip for security and integration,security",
+			name: "don't skip for integration,security and security",
 			env:  "security",
 			tags: []tag.Tag{tag.Integration, tag.Security},
 			want: false,
 		},
 		{
-			name: "skip for security and -integration,security",
+			name: "skip for integration,security and -integration,security",
 			env:  "-integration,security",
 			tags: []tag.Tag{tag.Integration, tag.Security},
 			want: true,
 		},
 		{
-			name: "skip for security and integration,-security",
+			name: "skip for integration,security and integration,-security",
 			env:  "integration,-security",
 			tags: []tag.Tag{tag.Integration, tag.Security},
 			want: true,
 		},
+		{
+			name: "don't skip for integration,security and -short",
+			env:  "-short",
+			tags: []tag.Tag{tag.Integration, tag.Security},
+			want: false,
+		},
 	}
-
-	require.NoError(t, os.Setenv(envTestTags, "short,integration,security"))
-	assert.False(t, skipTags([]tag.Tag{tag.Integration, tag.Security}))
-
-	require.NoError(t, os.Setenv(envTestTags, "short,integration,-security"))
-	assert.True(t, skipTags([]tag.Tag{tag.Integration, tag.Security}))
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
