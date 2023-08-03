@@ -1,2 +1,32 @@
 builds:
   - skip: true
+
+changelog:
+  filters:
+    exclude:
+      - "^wip"
+      - "^test"
+      - "^chore"
+      - "merge conflict"
+      - Merge pull request
+      - Merge remote-tracking branch
+      - Merge branch
+      - go mod tidy
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 0
+    - title: Dependency updates
+      regexp: '^.*?(feat|fix)\(deps\)!?:.+$'
+      order: 100
+    - title: "Security updates"
+      regexp: '^.*?sec(\([[:word:]]+\))??!?:.+$'
+      order: 150
+    - title: "Bug fixes"
+      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 200
+    - title: 'Quality'
+      regexp: '^.*?(qa|test|tests)(\([[:word:]]+\))??!?:.+$'
+      order: 3
+    - title: Other
+      order: 999
