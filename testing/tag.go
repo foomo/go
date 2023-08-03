@@ -8,7 +8,7 @@ import (
 	"github.com/foomo/go/testing/tag"
 )
 
-const envTestTags = "GO_TEST_TAGS"
+const EnvTestTags = "GO_TEST_TAGS"
 
 // Tags defines the tags that the test should run under.
 //
@@ -39,18 +39,19 @@ func Tags(t *testing.T, tags ...tag.Tag) {
 		return
 	}
 
-	if skipTags(tags) {
+	if SkipTags(tags...) {
 		t.Skipf("skipping test with tag: %s", tags)
 	}
 }
 
-func skipTags(tags []tag.Tag) bool {
+// SkipTags returns true if the tag rules apply
+func SkipTags(tags ...tag.Tag) bool {
 	// always skip if no tags are provided so it can be used as block tests
 	if len(tags) == 0 {
 		return true
 	}
 
-	envTags := osx.GetenvStringSlice(envTestTags, nil)
+	envTags := osx.GetenvStringSlice(EnvTestTags, nil)
 	// always return false if there are non tags defined
 	if envTags == nil {
 		return false

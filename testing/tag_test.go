@@ -1,15 +1,16 @@
-package testing //nolint:testpackage
+package testing_test
 
 import (
 	"os"
 	"testing"
 
+	testingx "github.com/foomo/go/testing"
 	"github.com/foomo/go/testing/tag"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-func Test_skipTags(t *testing.T) {
+func TestSkipTags(t *testing.T) {
 	tests := []struct {
 		name string
 		env  string
@@ -93,11 +94,11 @@ func Test_skipTags(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if tt.env == "" {
-				require.NoError(t, os.Unsetenv(envTestTags))
+				require.NoError(t, os.Unsetenv(testingx.EnvTestTags))
 			} else {
-				require.NoError(t, os.Setenv(envTestTags, tt.env))
+				require.NoError(t, os.Setenv(testingx.EnvTestTags, tt.env))
 			}
-			assert.Equalf(t, tt.want, skipTags(tt.tags), "skipTags(%v)", tt.tags)
+			assert.Equalf(t, tt.want, testingx.SkipTags(tt.tags...), "skipTags(%v)", tt.tags)
 		})
 	}
 }
