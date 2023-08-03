@@ -11,5 +11,5 @@ lint-staged:
     - goimports -l -w
 
 lint-commit:
-  types: '^(feat|fix|build|chore|docs|perf|refactor|revert|style|test|wip)$'
+  types: '^(feat|fix|chore|sec|docs|perf|refactor|revert|style|test|wip)$'
   header: '^(?P<type>\w+)(\((?P<scope>[\w/.-]+)\))?(?P<breaking>!)?:( +)?(?P<header>.+)'
