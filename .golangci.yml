@@ -2,19 +2,17 @@ run:
   timeout: 5m
 
 linters-settings:
-  goimports:
-    local-prefixes: github.com/foomo/go
   importas:
     alias:
-      - pkg: github.com/foomo/go/(.*)/(v[\w\d]+)
-        alias: $2x
+      # Enforce `x` suffix
+      - pkg: github\.com/foomo/go/(.*\/)?(\..*?|.*?)(\.[^.]*?)?(#.*$|\?.*$|$)
+        alias: "${2}x"
   depguard:
     rules:
       main:
-        # List of allowed packages.
-        # NOTE: this repo should not rely only rely on the standard library
         allow:
           - $gostd
+          # NOTE: this repo should not rely only rely on the standard library
           - github.com/foomo/go
           - github.com/stretchr/testify
 
