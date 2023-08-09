@@ -4,9 +4,9 @@ run:
 linters-settings:
   importas:
     alias:
-      # Enforce `x` suffix
-      - pkg: github.com\/foomo\/go.*\/([^\/]+)\/?$
-        alias: "${1}x"
+      - pkg: '^github.com\/foomo\/go\/(.*\/)?([^\/]+)\/?$'
+        alias: '${2}x' # enforce `x` suffix
+    no-unaliased: true
   depguard:
     rules:
       main:

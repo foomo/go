@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	osx "github.com/foomo/go/os"
-	"github.com/foomo/go/testing/tag"
+	tagx "github.com/foomo/go/testing/tag"
 )
 
 const EnvTestTags = "GO_TEST_TAGS"
@@ -15,7 +15,7 @@ const EnvTestTags = "GO_TEST_TAGS"
 // For example:
 //
 //	func TestDemo(t *testing.T) {
-//	  testing.Tags(t, tag.Integration, tag.Short)
+//	  testing.Tags(t, tagx.Integration, tagx.Short)
 //	}
 //
 // Results being run with:
@@ -30,7 +30,7 @@ const EnvTestTags = "GO_TEST_TAGS"
 //   - `GO_TEST_TAGS=-fast`
 //   - `GO_TEST_TAGS=-integration`
 //   - `GO_TEST_TAGS=fast,-integration`
-func Tags(t *testing.T, tags ...tag.Tag) {
+func Tags(t *testing.T, tags ...tagx.Tag) {
 	t.Helper()
 
 	// always skip if no tags are provided so it can be used as block tests
@@ -45,7 +45,7 @@ func Tags(t *testing.T, tags ...tag.Tag) {
 }
 
 // SkipTags returns true if the tag rules apply
-func SkipTags(tags ...tag.Tag) bool {
+func SkipTags(tags ...tagx.Tag) bool {
 	// always skip if no tags are provided so it can be used as block tests
 	if len(tags) == 0 {
 		return true
@@ -59,10 +59,10 @@ func SkipTags(tags ...tag.Tag) bool {
 
 	// translate tags
 	allExclude := true
-	envTagsMap := make(map[tag.Tag]bool, len(tags))
+	envTagsMap := make(map[tagx.Tag]bool, len(tags))
 	for _, s := range envTags {
 		include := !strings.HasPrefix(s, "-")
-		envTagsMap[tag.Tag(strings.TrimPrefix(s, "-"))] = include
+		envTagsMap[tagx.Tag(strings.TrimPrefix(s, "-"))] = include
 		if include {
 			allExclude = false
 		}
