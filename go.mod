@@ -2,7 +2,10 @@ module github.com/foomo/go
 
 go 1.20
 
-require github.com/stretchr/testify v1.8.4
+require (
+	github.com/iancoleman/strcase v0.3.0
+	github.com/stretchr/testify v1.8.4
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

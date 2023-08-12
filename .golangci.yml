@@ -15,6 +15,7 @@ linters-settings:
           # NOTE: this repo should not rely only rely on the standard library
           - github.com/foomo/go
           - github.com/stretchr/testify
+          - github.com/iancoleman/strcase
 
 linters:
   enable:
