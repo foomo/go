@@ -21,6 +21,7 @@
 .PHONY: doc
 ## Run tests
 doc:
+	@open "http://localhost:6060/pkg/github.com/foomo/go/"
 	@godoc -http=localhost:6060 -play
 
 .PHONY: test
