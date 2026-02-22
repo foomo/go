@@ -60,8 +60,10 @@ func SkipTags(tags ...tagx.Tag) bool {
 	// translate tags
 	allExclude := true
 	envTagsMap := make(map[tagx.Tag]bool, len(tags))
+
 	for _, s := range envTags {
 		include := !strings.HasPrefix(s, "-")
+
 		envTagsMap[tagx.Tag(strings.TrimPrefix(s, "-"))] = include
 		if include {
 			allExclude = false
@@ -73,10 +75,12 @@ func SkipTags(tags ...tagx.Tag) bool {
 		anyInclude bool
 		anyExclude bool
 	)
+
 	for _, v := range tags {
 		include, ok := envTagsMap[v]
 		if ok {
 			anyFound = true
+
 			if include {
 				anyInclude = true
 			} else {
@@ -89,5 +93,5 @@ func SkipTags(tags ...tagx.Tag) bool {
 		return false
 	}
 
-	return !(anyInclude && !anyExclude)
+	return !anyInclude || anyExclude
 }

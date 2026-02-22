@@ -1,13 +1,11 @@
 package testing_test
 
 import (
-	"os"
 	"testing"
 
 	testingx "github.com/foomo/go/testing"
 	tagx "github.com/foomo/go/testing/tag"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestSkipTags(t *testing.T) {
@@ -93,11 +91,10 @@ func TestSkipTags(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if tt.env == "" {
-				require.NoError(t, os.Unsetenv(testingx.EnvTestTags))
-			} else {
-				require.NoError(t, os.Setenv(testingx.EnvTestTags, tt.env))
+			if tt.env != "" {
+				t.Setenv(testingx.EnvTestTags, tt.env)
 			}
+
 			assert.Equalf(t, tt.want, testingx.SkipTags(tt.tags...), "skipTags(%v)", tt.tags)
 		})
 	}

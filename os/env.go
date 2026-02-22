@@ -26,6 +26,7 @@ func Getenv(key string, def string) string {
 	if str == "" {
 		return def
 	}
+
 	return str
 }
 
@@ -35,10 +36,12 @@ func GetenvBool(key string, def bool) (bool, error) {
 	if str == "" {
 		return def, nil
 	}
+
 	value, err := strconv.ParseBool(str)
 	if err != nil {
 		return false, err
 	}
+
 	return value, nil
 }
 
@@ -48,10 +51,12 @@ func GetenvInt64(key string, def int64) (int64, error) {
 	if str == "" {
 		return def, nil
 	}
+
 	value, err := strconv.ParseInt(str, 0, 64)
 	if err != nil {
 		return 0, err
 	}
+
 	return value, nil
 }
 
@@ -61,10 +66,12 @@ func GetenvFloat64(key string, def float64) (float64, error) {
 	if str == "" {
 		return def, nil
 	}
+
 	value, err := strconv.ParseFloat(str, 64)
 	if err != nil {
 		return 0, err
 	}
+
 	return value, nil
 }
 
@@ -74,9 +81,11 @@ func GetenvStringSlice(key string, def []string) []string {
 	if str == "" {
 		return def
 	}
+
 	value := strings.Split(str, ",")
 	for i, s := range value {
 		value[i] = strings.TrimSpace(s)
 	}
+
 	return value
 }

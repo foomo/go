@@ -14,7 +14,7 @@ func TestEnvExists(t *testing.T) {
 	require.NoError(t, os.Unsetenv("FOO"))
 	assert.False(t, osx.HasEnv("FOO"))
 
-	require.NoError(t, os.Setenv("FOO", "bar"))
+	t.Setenv("FOO", "bar")
 	assert.True(t, osx.HasEnv("FOO"))
 }
 
@@ -24,7 +24,7 @@ func TestMustEnvExists(t *testing.T) {
 		osx.MustHasEnv("FOO")
 	})
 
-	require.NoError(t, os.Setenv("FOO", "bar"))
+	t.Setenv("FOO", "bar")
 	assert.NotPanics(t, func() {
 		osx.HasEnv("FOO")
 	})
@@ -39,11 +39,13 @@ func TestGetenv(t *testing.T) {
 
 func TestGetenvBool(t *testing.T) {
 	t.Setenv("FOO", "")
+
 	if v, err := osx.GetenvBool("FOO", false); assert.NoError(t, err) {
 		assert.False(t, v)
 	}
 
 	t.Setenv("FOO", "true")
+
 	if v, err := osx.GetenvBool("FOO", false); assert.NoError(t, err) {
 		assert.True(t, v)
 	}
@@ -51,11 +53,13 @@ func TestGetenvBool(t *testing.T) {
 
 func TestGetenvInt64(t *testing.T) {
 	t.Setenv("FOO", "")
+
 	if v, err := osx.GetenvInt64("FOO", 1); assert.NoError(t, err) {
 		assert.Equal(t, int64(1), v)
 	}
 
 	t.Setenv("FOO", "2")
+
 	if v, err := osx.GetenvInt64("FOO", 1); assert.NoError(t, err) {
 		assert.Equal(t, int64(2), v)
 	}
@@ -63,11 +67,13 @@ func TestGetenvInt64(t *testing.T) {
 
 func TestGetenvFloat64(t *testing.T) {
 	t.Setenv("FOO", "")
+
 	if v, err := osx.GetenvFloat64("FOO", 0.1); assert.NoError(t, err) {
 		assert.Equal(t, 0.1, v)
 	}
 
 	t.Setenv("FOO", "0.2")
+
 	if v, err := osx.GetenvFloat64("FOO", 0.1); assert.NoError(t, err) {
 		assert.Equal(t, 0.2, v)
 	}
