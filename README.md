@@ -14,7 +14,7 @@ Go standard library extension, adding the missing parts used in the foomo ecosys
 
 Contributions are welcome! Please read the [contributing guide](docs/CONTRIBUTING.md).
 
-![Contributors](https://contributors-table.vercel.app/image?repo=foomo/keel&width=50&columns=15)
+![Contributors](https://contributors-table.vercel.app/image?repo=foomo/go&width=50&columns=15)
 
 ## License
 
