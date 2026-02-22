@@ -10,6 +10,8 @@ const (
 	Performance Tag = "performance"
 	Security    Tag = "security"
 	Short       Tag = "short"
+	Race        Tag = "race"
+	Update      Tag = "update"
 	Skip        Tag = "skip"
 )
 
