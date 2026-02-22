@@ -9,7 +9,9 @@ import (
 )
 
 func TestFreePort(t *testing.T) {
+	t.Parallel()
+
 	port, err := netx.FreePort()
 	require.NoError(t, err)
-	assert.NotEqual(t, 0, port)
+	assert.NotEmpty(t, port)
 }

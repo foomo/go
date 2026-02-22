@@ -13,18 +13,19 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Unshallow
-        run: git fetch --prune --unshallow
-
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v6
         with:
-          go-version-file: 'go.mod'
+          fetch-depth: 0
 
-      - uses: goreleaser/goreleaser-action@v5
+      - uses: jdx/mise-action@v3
+
+      - uses: actions/setup-go@v6
         with:
-          version: latest
+          go-version-file: go.mod
+
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          version: '~> v2'
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
