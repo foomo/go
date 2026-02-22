@@ -13,6 +13,7 @@ func Tprintf(format string, pairs ...string) string {
 	}
 
 	buf := &bytes.Buffer{}
+
 	d := argsToAttr(pairs)
 	if err := t.Execute(buf, d); err != nil {
 		return "render error: " + err.Error()
