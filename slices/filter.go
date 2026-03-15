@@ -8,5 +8,6 @@ func Filter[T any](items []T, fn func(T) bool) []T {
 			out = append(out, item)
 		}
 	}
+
 	return out
 }

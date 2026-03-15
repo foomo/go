@@ -11,6 +11,7 @@ func ExampleGroupBy() {
 		name     string
 		category string
 	}
+
 	items := []item{
 		{"apple", "fruit"},
 		{"carrot", "vegetable"},
