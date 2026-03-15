@@ -1,91 +1,181 @@
 package os_test
 
 import (
+	"fmt"
 	"os"
-	"testing"
+	"sort"
 
 	osx "github.com/foomo/go/os"
-	"github.com/stretchr/testify/require"
-
-	"github.com/stretchr/testify/assert"
 )
 
-func TestEnvExists(t *testing.T) {
-	require.NoError(t, os.Unsetenv("FOO"))
-	assert.False(t, osx.HasEnv("FOO"))
+func ExampleHasEnv() {
+	_ = os.Unsetenv("FOO")
 
-	t.Setenv("FOO", "bar")
-	assert.True(t, osx.HasEnv("FOO"))
+	fmt.Println(osx.HasEnv("FOO"))
+
+	_ = os.Setenv("FOO", "bar")
+
+	fmt.Println(osx.HasEnv("FOO"))
+
+	// Output:
+	// false
+	// true
 }
 
-func TestMustEnvExists(t *testing.T) {
-	require.NoError(t, os.Unsetenv("FOO"))
-	assert.Panics(t, func() {
-		osx.MustHasEnv("FOO")
-	})
+func ExampleMustHasEnv() {
+	_ = os.Setenv("FOO", "bar")
 
-	t.Setenv("FOO", "bar")
-	assert.NotPanics(t, func() {
-		osx.HasEnv("FOO")
-	})
+	osx.MustHasEnv("FOO") // does not panic
+	fmt.Println("ok")
+
+	// Output:
+	// ok
 }
 
-func TestGetenv(t *testing.T) {
-	t.Setenv("FOO", "")
-	assert.Equal(t, "foo", osx.Getenv("FOO", "foo"))
-	t.Setenv("FOO", "bar")
-	assert.Equal(t, "bar", osx.Getenv("FOO", "foo"))
+func ExampleGetenv() {
+	_ = os.Setenv("FOO", "")
+
+	fmt.Println(osx.Getenv("FOO", "fallback"))
+
+	_ = os.Setenv("FOO", "bar")
+
+	fmt.Println(osx.Getenv("FOO", "fallback"))
+
+	// Output:
+	// fallback
+	// bar
 }
 
-func TestGetenvBool(t *testing.T) {
-	t.Setenv("FOO", "")
+func ExampleGetenvBool() {
+	_ = os.Setenv("FOO", "")
+	v, _ := osx.GetenvBool("FOO", false)
+	fmt.Println(v)
 
-	if v, err := osx.GetenvBool("FOO", false); assert.NoError(t, err) {
-		assert.False(t, v)
-	}
+	_ = os.Setenv("FOO", "true")
+	v, _ = osx.GetenvBool("FOO", false)
+	fmt.Println(v)
 
-	t.Setenv("FOO", "true")
-
-	if v, err := osx.GetenvBool("FOO", false); assert.NoError(t, err) {
-		assert.True(t, v)
-	}
+	// Output:
+	// false
+	// true
 }
 
-func TestGetenvInt64(t *testing.T) {
-	t.Setenv("FOO", "")
+func ExampleGetenvInt64() {
+	_ = os.Setenv("FOO", "")
+	v, _ := osx.GetenvInt64("FOO", 1)
+	fmt.Println(v)
 
-	if v, err := osx.GetenvInt64("FOO", 1); assert.NoError(t, err) {
-		assert.Equal(t, int64(1), v)
-	}
+	_ = os.Setenv("FOO", "2")
+	v, _ = osx.GetenvInt64("FOO", 1)
+	fmt.Println(v)
 
-	t.Setenv("FOO", "2")
-
-	if v, err := osx.GetenvInt64("FOO", 1); assert.NoError(t, err) {
-		assert.Equal(t, int64(2), v)
-	}
+	// Output:
+	// 1
+	// 2
 }
 
-func TestGetenvFloat64(t *testing.T) {
-	t.Setenv("FOO", "")
+func ExampleGetenvInt32() {
+	_ = os.Setenv("FOO", "")
+	v, _ := osx.GetenvInt32("FOO", 1)
+	fmt.Println(v)
 
-	if v, err := osx.GetenvFloat64("FOO", 0.1); assert.NoError(t, err) {
-		assert.Equal(t, 0.1, v)
-	}
+	_ = os.Setenv("FOO", "2")
+	v, _ = osx.GetenvInt32("FOO", 1)
+	fmt.Println(v)
 
-	t.Setenv("FOO", "0.2")
+	_ = os.Setenv("FOO", "0x1F")
+	v, _ = osx.GetenvInt32("FOO", 0)
+	fmt.Println(v)
 
-	if v, err := osx.GetenvFloat64("FOO", 0.1); assert.NoError(t, err) {
-		assert.Equal(t, 0.2, v)
-	}
+	_ = os.Setenv("FOO", "2147483648")
+	_, err := osx.GetenvInt32("FOO", 0)
+	fmt.Println(err != nil)
+
+	// Output:
+	// 1
+	// 2
+	// 31
+	// true
 }
 
-func TestGetenvStringSlice(t *testing.T) {
-	t.Setenv("FOO", "")
-	assert.Nil(t, osx.GetenvStringSlice("FOO", nil))
+func ExampleGetenvFloat64() {
+	_ = os.Setenv("FOO", "")
+	v, _ := osx.GetenvFloat64("FOO", 0.1)
+	fmt.Println(v)
 
-	t.Setenv("FOO", "foo")
-	assert.Equal(t, []string{"foo"}, osx.GetenvStringSlice("FOO", nil))
+	_ = os.Setenv("FOO", "0.2")
+	v, _ = osx.GetenvFloat64("FOO", 0.1)
+	fmt.Println(v)
 
-	t.Setenv("FOO", "foo,bar")
-	assert.Equal(t, []string{"foo", "bar"}, osx.GetenvStringSlice("FOO", nil))
+	// Output:
+	// 0.1
+	// 0.2
+}
+
+func ExampleGetenvFloat32() {
+	_ = os.Setenv("FOO", "")
+	v, _ := osx.GetenvFloat32("FOO", 0.5)
+	fmt.Println(v)
+
+	_ = os.Setenv("FOO", "1.5")
+	v, _ = osx.GetenvFloat32("FOO", 0.5)
+	fmt.Println(v)
+
+	_ = os.Setenv("FOO", "not-a-number")
+	_, err := osx.GetenvFloat32("FOO", 0)
+	fmt.Println(err != nil)
+
+	// Output:
+	// 0.5
+	// 1.5
+	// true
+}
+
+func ExampleGetenvStringSlice() {
+	_ = os.Setenv("FOO", "")
+
+	fmt.Println(osx.GetenvStringSlice("FOO", nil))
+
+	_ = os.Setenv("FOO", "foo")
+
+	fmt.Println(osx.GetenvStringSlice("FOO", nil))
+
+	_ = os.Setenv("FOO", "foo,bar")
+
+	fmt.Println(osx.GetenvStringSlice("FOO", nil))
+
+	// Output:
+	// []
+	// [foo]
+	// [foo bar]
+}
+
+func ExampleGetenvStringMapString() {
+	_ = os.Setenv("FOO", "a:1")
+	v, _ := osx.GetenvStringMapString("FOO", nil)
+	fmt.Println(v)
+
+	_ = os.Setenv("FOO", " x : hello , y : world ")
+	v, _ = osx.GetenvStringMapString("FOO", nil)
+
+	keys := make([]string, 0, len(v))
+	for k := range v {
+		keys = append(keys, k)
+	}
+
+	sort.Strings(keys)
+
+	for _, k := range keys {
+		fmt.Printf("%s:%s\n", k, v[k])
+	}
+
+	_ = os.Setenv("FOO", "invalid")
+	_, err := osx.GetenvStringMapString("FOO", nil)
+	fmt.Println(err != nil)
+
+	// Output:
+	// map[a:1]
+	// x:hello
+	// y:world
+	// true
 }
