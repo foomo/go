@@ -92,7 +92,7 @@ godocs:
 .PHONY: help
 ## Show help text
 help:
-	@echo "Keel\n"
+	@echo "Go\n"
 	@echo "Usage:\n  make [task]"
 	@awk '{ \
 		if($$0 ~ /^### /){ \
