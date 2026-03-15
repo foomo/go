@@ -11,10 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNewRSAKeys(t *testing.T) {
+func TestGenerateRSAKeyPair(t *testing.T) {
 	t.Parallel()
 
-	publicPath, privatePath := testingx.NewRSAKeys(t)
+	publicPath, privatePath := testingx.GenerateRSAKeyPair(t)
 
 	// verify files exist
 	require.FileExists(t, publicPath)

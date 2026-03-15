@@ -81,6 +81,18 @@ outdated:
 
 ### Documentation
 
+.PHONY: docs
+## Open docs
+docs:
+	@echo "〉starting docs"
+	@cd docs && bun install && bun run dev
+
+.PHONY: docs.build
+## Open docs
+docs.build:
+	@echo "〉building docs"
+	@cd docs && bun install && bun run build
+
 .PHONY: godocs
 ## Open go docs
 godocs:
@@ -92,7 +104,7 @@ godocs:
 .PHONY: help
 ## Show help text
 help:
-	@echo "Keel\n"
+	@echo "Go\n"
 	@echo "Usage:\n  make [task]"
 	@awk '{ \
 		if($$0 ~ /^### /){ \
