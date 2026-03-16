@@ -61,17 +61,22 @@ generate:
 ## Run tests
 test:
 	@echo "〉go test"
-	@GO_TEST_TAGS=-skip go test -tags=safe -coverprofile=coverage.out ./...
+	@GO_TEST_TAGS=-skip go test -tags=safe -shuffle=on -coverprofile=coverage.out ./...
 
 .PHONY: test.race
 ## Run tests with -race
 test.race:
-	@GO_TEST_TAGS=-skip go test -tags=safe -coverprofile=coverage.out -race ./...
+	@GO_TEST_TAGS=-skip go test -tags=safe -shuffle=on -coverprofile=coverage.out -race ./...
 
 .PHONY: test.update
 ## Run tests with -update
 test.update:
-	@GO_TEST_TAGS=-skip go test -tags=safe -coverprofile=coverage.out -update ./...
+	@GO_TEST_TAGS=-skip go test -tags=safe -shuffle=on -coverprofile=coverage.out -update ./...
+
+.PHONY: test.bench
+## Run tests with -bench
+test.bench:
+	@GO_TEST_TAGS=-skip go test -tags=safe -bench=. -benchmem ./...
 
 .PHONY: outdated
 ## Show outdated direct dependencies

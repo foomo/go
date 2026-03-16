@@ -2,13 +2,19 @@ package testing
 
 import (
 	"strings"
-	"testing"
 
 	osx "github.com/foomo/go/os"
 	tagx "github.com/foomo/go/testing/tag"
 )
 
 const EnvTestTags = "GO_TEST_TAGS"
+
+// Taggable is an interface that allows to skip tests based on tags.
+type Taggable interface {
+	Helper()
+	Skip(args ...any)
+	Skipf(format string, args ...any)
+}
 
 // Tags defines the tags that the test should run under.
 //
@@ -30,7 +36,7 @@ const EnvTestTags = "GO_TEST_TAGS"
 //   - `GO_TEST_TAGS=-fast`
 //   - `GO_TEST_TAGS=-integration`
 //   - `GO_TEST_TAGS=fast,-integration`
-func Tags(t *testing.T, tags ...tagx.Tag) {
+func Tags(t Taggable, tags ...tagx.Tag) {
 	t.Helper()
 
 	// always skip if no tags are provided so it can be used as block tests

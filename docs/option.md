@@ -33,6 +33,48 @@ func ApplyE[T any](v T, opts ...OptionE[T]) error
 
 Applies each option function to the value, stopping and returning on the first error.
 
+### Build
+
+```go
+func Build[T any](v T, builders ...interface{ List() []Option[T] })
+```
+
+Applies options from one or more builders to the value. Nil builders are safely skipped.
+
+### BuildE
+
+```go
+func BuildE[T any](v T, builders ...interface{ List() []OptionE[T] }) error
+```
+
+Applies options from one or more error-returning builders to the value, stopping and returning on the first error.
+
+## Types
+
+### Builder
+
+```go
+type Builder[T any] struct {
+	Opts []Option[T]
+}
+
+func (b *Builder[T]) List() []Option[T]
+```
+
+A generic option builder that collects functional options. Embed it in domain-specific builders to group related options.
+
+### BuilderE
+
+```go
+type BuilderE[T any] struct {
+	Opts []OptionE[T]
+}
+
+func (b *BuilderE[T]) List() []OptionE[T]
+```
+
+A generic option builder that collects error-returning functional options.
+
 ## Example
 
 ```go
@@ -64,6 +106,32 @@ func WithPort(port int) option.Option[*Server] {
 func main() {
 	s := &Server{}
 	option.Apply(s, WithName("localhost"), WithPort(8080))
+	fmt.Println(s.Name) // localhost
+	fmt.Println(s.Port) // 8080
+}
+```
+
+### Using Builders
+
+```go
+type ServerBuilder struct {
+	option.Builder[*Server]
+}
+
+func (b *ServerBuilder) Name(name string) *ServerBuilder {
+	b.Opts = append(b.Opts, WithName(name))
+	return b
+}
+
+func (b *ServerBuilder) Port(port int) *ServerBuilder {
+	b.Opts = append(b.Opts, WithPort(port))
+	return b
+}
+
+func main() {
+	s := &Server{}
+	b := &ServerBuilder{}
+	option.Build(s, b.Name("localhost").Port(8080))
 	fmt.Println(s.Name) // localhost
 	fmt.Println(s.Port) // 8080
 }
