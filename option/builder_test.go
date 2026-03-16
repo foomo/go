@@ -37,5 +37,5 @@ func ExampleBuilder() {
 
 	fmt.Println(o)
 
-	// Output: &{example}
+	// Output: {example}
 }
