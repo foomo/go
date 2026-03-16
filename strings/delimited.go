@@ -18,9 +18,11 @@ func ToScreamingDelimited(s string, delimiter uint8, ignore string, screaming bo
 
 	n := strings.Builder{}
 	n.Grow(len(s) + 2)
+
 	for i := 0; i < len(s); i++ {
 		v := s[i]
 		vIsCap := v >= 'A' && v <= 'Z'
+
 		vIsLow := v >= 'a' && v <= 'z'
 		if vIsLow && screaming {
 			v -= 'a' - 'A'
@@ -33,6 +35,7 @@ func ToScreamingDelimited(s string, delimiter uint8, ignore string, screaming bo
 			vIsNum := v >= '0' && v <= '9'
 			nextIsCap := next >= 'A' && next <= 'Z'
 			nextIsLow := next >= 'a' && next <= 'z'
+
 			nextIsNum := next >= '0' && next <= '9'
 			if (vIsCap && (nextIsLow || nextIsNum)) || (vIsLow && (nextIsCap || nextIsNum)) || (vIsNum && (nextIsCap || nextIsLow)) {
 				prevIgnore := ignore != "" && i > 0 && strings.IndexByte(ignore, s[i-1]) >= 0
@@ -42,10 +45,13 @@ func ToScreamingDelimited(s string, delimiter uint8, ignore string, screaming bo
 							n.WriteByte(delimiter)
 						}
 					}
+
 					n.WriteByte(v)
+
 					if vIsLow || vIsNum || nextIsNum {
 						n.WriteByte(delimiter)
 					}
+
 					continue
 				}
 			}

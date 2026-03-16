@@ -24,6 +24,7 @@ func (b *MyOptionsBuilder) WithName(name string) *MyOptionsBuilder {
 	b.Opts = append(b.Opts, func(o *MyOptions) {
 		o.Name = name
 	})
+
 	return b
 }
 
