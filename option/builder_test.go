@@ -33,7 +33,40 @@ func ExampleBuilder() {
 	b.WithName("example")
 
 	o := MyOptions{}
-	option.Apply(&o, b.List()...)
+	option.Build(&o, b)
+
+	fmt.Println(o)
+
+	// Output: {example}
+}
+
+type MyOptionsBuilderE struct {
+	option.BuilderE[*MyOptions]
+}
+
+func MyBuilderE() *MyOptionsBuilderE {
+	return &MyOptionsBuilderE{
+		option.BuilderE[*MyOptions]{},
+	}
+}
+
+func (b *MyOptionsBuilderE) WithName(name string) *MyOptionsBuilderE {
+	b.Opts = append(b.Opts, func(o *MyOptions) error {
+		o.Name = name
+		return nil
+	})
+
+	return b
+}
+
+func ExampleBuilderE() {
+	b := MyBuilderE()
+	b.WithName("example")
+
+	o := MyOptions{}
+	if err := option.BuildE(&o, b); err != nil {
+		panic(err)
+	}
 
 	fmt.Println(o)
 
