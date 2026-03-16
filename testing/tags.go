@@ -12,8 +12,8 @@ const EnvTestTags = "GO_TEST_TAGS"
 // Taggable is an interface that allows to skip tests based on tags.
 type Taggable interface {
 	Helper()
-	Skip(args ...interface{})
-	Skipf(format string, args ...interface{})
+	Skip(args ...any)
+	Skipf(format string, args ...any)
 }
 
 // Tags defines the tags that the test should run under.
