@@ -11,7 +11,7 @@ import (
 )
 
 // GenerateED25519PrivateKey generates a new ED25519 private key.
-func GenerateED25519PrivateKey(t *testing.T) ed25519.PrivateKey {
+func GenerateED25519PrivateKey(t testing.TB) ed25519.PrivateKey {
 	t.Helper()
 
 	_, privateKey, err := ed25519.GenerateKey(rand.Reader)
@@ -21,7 +21,7 @@ func GenerateED25519PrivateKey(t *testing.T) ed25519.PrivateKey {
 }
 
 // EncodeED25519PrivateKey encodes an ED25519 private key to PEM format.
-func EncodeED25519PrivateKey(t *testing.T, privateKey ed25519.PrivateKey) string {
+func EncodeED25519PrivateKey(t testing.TB, privateKey ed25519.PrivateKey) string {
 	t.Helper()
 
 	privateKeyBytes, err := x509.MarshalPKCS8PrivateKey(privateKey)
@@ -36,7 +36,7 @@ func EncodeED25519PrivateKey(t *testing.T, privateKey ed25519.PrivateKey) string
 }
 
 // EncodeED25519PublicKey encodes an ED25519 public key to PEM format.
-func EncodeED25519PublicKey(t *testing.T, publicKey ed25519.PublicKey) string {
+func EncodeED25519PublicKey(t testing.TB, publicKey ed25519.PublicKey) string {
 	t.Helper()
 
 	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publicKey)
@@ -54,12 +54,12 @@ func EncodeED25519PublicKey(t *testing.T, publicKey ed25519.PublicKey) string {
 //
 // Example usage:
 //
-//	func TestExample(t *testing.T) {
+//	func TestExample(t testing.TB) {
 //		publicKeyPath, privateKeyPath := GenerateED25519KeyPair(t)
 //		// Use the key paths for testing crypto operations
 //		// Files are automatically cleaned up when test completes
 //	}
-func GenerateED25519KeyPair(t *testing.T) (public, private string) { //nolint:nonamedreturns // clearifies return values
+func GenerateED25519KeyPair(t testing.TB) (public, private string) { //nolint:nonamedreturns // clearifies return values
 	t.Helper()
 
 	privateKey := GenerateED25519PrivateKey(t)
@@ -86,7 +86,7 @@ func GenerateED25519KeyPair(t *testing.T) (public, private string) { //nolint:no
 }
 
 // GenerateED25519PublicKey generates a new public key from an ED25519 private key and writes it to a file.
-func GenerateED25519PublicKey(t *testing.T, privateKey ed25519.PrivateKey, filePath string) {
+func GenerateED25519PublicKey(t testing.TB, privateKey ed25519.PrivateKey, filePath string) {
 	t.Helper()
 
 	publicKey := privateKey.Public().(ed25519.PublicKey) //nolint:forcetypeassert // cast is safe

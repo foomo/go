@@ -8,7 +8,7 @@ import (
 )
 
 // FreePort returns a free port on localhost
-func FreePort(t *testing.T) string {
+func FreePort(t testing.TB) string {
 	t.Helper()
 
 	addr, err := net.FreePort()

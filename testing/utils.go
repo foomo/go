@@ -9,7 +9,7 @@ import (
 )
 
 // writeKeyToFile writes a PEM-encoded key to a file.
-func writeKeyToFile(t *testing.T, pemData string, filePath string) {
+func writeKeyToFile(t testing.TB, pemData string, filePath string) {
 	t.Helper()
 
 	err := os.WriteFile(filePath, []byte(pemData), 0o600)
@@ -17,7 +17,7 @@ func writeKeyToFile(t *testing.T, pemData string, filePath string) {
 }
 
 // writePEMToTempFile writes a PEM block to a temporary file and returns the file path.
-func writePEMToTempFile(t *testing.T, tempDir string, pattern string, block *pem.Block) string {
+func writePEMToTempFile(t testing.TB, tempDir string, pattern string, block *pem.Block) string {
 	t.Helper()
 
 	file, err := os.CreateTemp(tempDir, pattern)
