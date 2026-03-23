@@ -8,11 +8,11 @@ import (
 )
 
 // FreePort returns a free port on localhost
-func FreePort(t *testing.T) string {
-	t.Helper()
+func FreePort(tb testing.TB) string {
+	tb.Helper()
 
 	addr, err := net.FreePort()
-	require.NoError(t, err)
+	require.NoError(tb, err)
 
 	return addr
 }
