@@ -511,7 +511,7 @@ func ExampleGetenvUintSlice() {
 func ExampleGetenvUint8Slice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
 	v, _ := osx.GetenvUint8Slice("FOO", nil)
-	fmt.Println(string(v))
+	fmt.Println(v) //nolint:staticcheck // QF1010
 
 	// Output:
 	// [1 2 3]
