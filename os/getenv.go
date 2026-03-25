@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	slicesx "github.com/foomo/go/slices"
 )
 
 var (
@@ -422,17 +424,9 @@ func getenvSlice[T any](key string, def []T, parse func(string) (T, error)) ([]T
 
 	parts := strings.Split(str, SliceSeperator)
 
-	result := make([]T, 0, len(parts))
-	for _, p := range parts {
-		v, err := parse(strings.TrimSpace(p))
-		if err != nil {
-			return nil, err
-		}
-
-		result = append(result, v)
-	}
-
-	return result, nil
+	return slicesx.MapE(parts, func(p string) (T, error) {
+		return parse(strings.TrimSpace(p))
+	})
 }
 
 // getenvMap is the generic comma-separated key:value map helper.

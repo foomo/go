@@ -13,3 +13,11 @@ func ExampleMap() {
 	fmt.Println(result)
 	// Output: [2 4 6]
 }
+
+func ExampleMapE() {
+	result, _ := slices.MapE([]int{1, 2, 3}, func(n int) (int, error) {
+		return n * 2, nil
+	})
+	fmt.Println(result)
+	// Output: [2 4 6]
+}
