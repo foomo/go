@@ -1,11 +1,9 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 version: 2
 
 project_name: go
 
 release:
-  github:
-    owner: foomo
-    name: go
   prerelease: auto
 
 builds:
