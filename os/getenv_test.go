@@ -511,7 +511,7 @@ func ExampleGetenvUintSlice() {
 func ExampleGetenvUint8Slice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
 	v, _ := osx.GetenvUint8Slice("FOO", nil)
-	fmt.Println(v)
+	fmt.Println(string(v))
 
 	// Output:
 	// [1 2 3]
@@ -620,7 +620,9 @@ func ExampleGetenvBoolMap() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%v\n", k, v[k])
 	}
@@ -638,7 +640,9 @@ func ExampleGetenvIntMap() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -656,7 +660,9 @@ func ExampleGetenvInt8Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -674,7 +680,9 @@ func ExampleGetenvInt16Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -692,7 +700,9 @@ func ExampleGetenvInt32Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -710,7 +720,9 @@ func ExampleGetenvInt64Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -728,7 +740,9 @@ func ExampleGetenvUintMap() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -746,7 +760,9 @@ func ExampleGetenvUint8Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -764,7 +780,9 @@ func ExampleGetenvUint16Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -782,7 +800,9 @@ func ExampleGetenvUint32Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -800,7 +820,9 @@ func ExampleGetenvUint64Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%d\n", k, v[k])
 	}
@@ -818,7 +840,9 @@ func ExampleGetenvFloat32Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%.1f\n", k, v[k])
 	}
@@ -836,7 +860,9 @@ func ExampleGetenvFloat64Map() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%.1f\n", k, v[k])
 	}
@@ -854,7 +880,9 @@ func ExampleGetenvDurationMap() {
 	for k := range v {
 		keys = append(keys, k)
 	}
+
 	sort.Strings(keys)
+
 	for _, k := range keys {
 		fmt.Printf("%s:%v\n", k, v[k])
 	}

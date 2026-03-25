@@ -40,6 +40,7 @@ func Getenv(key string, def string) string {
 	if str == "" {
 		return def
 	}
+
 	return str
 }
 
@@ -121,6 +122,7 @@ func MustGetenv(key string) string {
 	if !ok {
 		panic(fmt.Sprintf("required environment variable '%s' is not defined", key))
 	}
+
 	return str
 }
 
@@ -202,10 +204,12 @@ func GetenvStringSlice(key string, def []string) []string {
 	if str == "" {
 		return def
 	}
+
 	value := strings.Split(str, ",")
 	for i, s := range value {
 		value[i] = strings.TrimSpace(s)
 	}
+
 	return value
 }
 
@@ -390,10 +394,12 @@ func mustGetenvParse[T any](key string, parse func(string) (T, error)) T {
 	if !ok {
 		panic(fmt.Sprintf("required environment variable '%s' is not defined", key))
 	}
+
 	v, err := parse(str)
 	if err != nil {
 		panic(fmt.Sprintf("environment variable '%s': %v", key, err))
 	}
+
 	return v
 }
 
@@ -403,6 +409,7 @@ func getenvParse[T any](key string, def T, parse func(string) (T, error)) (T, er
 	if !ok {
 		return def, nil
 	}
+
 	return parse(str)
 }
 
@@ -412,15 +419,19 @@ func getenvSlice[T any](key string, def []T, parse func(string) (T, error)) ([]T
 	if !ok {
 		return def, nil
 	}
+
 	parts := strings.Split(str, SliceSeperator)
+
 	result := make([]T, 0, len(parts))
 	for _, p := range parts {
 		v, err := parse(strings.TrimSpace(p))
 		if err != nil {
 			return nil, err
 		}
+
 		result = append(result, v)
 	}
+
 	return result, nil
 }
 
@@ -430,20 +441,26 @@ func getenvMap[T any](key string, def map[string]T, parse func(string) (T, error
 	if !ok {
 		return def, nil
 	}
+
 	parts := strings.Split(str, MapSeperator)
+
 	result := make(map[string]T, len(parts))
 	for _, part := range parts {
 		part = strings.TrimSpace(part)
+
 		kv := strings.SplitN(part, MapKVSeperator, 2)
 		if len(kv) != 2 {
 			return nil, fmt.Errorf("invalid key:value pair: %q", part)
 		}
+
 		v, err := parse(strings.TrimSpace(kv[1]))
 		if err != nil {
 			return nil, err
 		}
+
 		result[strings.TrimSpace(kv[0])] = v
 	}
+
 	return result, nil
 }
 
@@ -455,7 +472,7 @@ func parseInt(s string) (int, error)       { return strconv.Atoi(s) }
 func parseInt8(s string) (int8, error)     { v, err := strconv.ParseInt(s, 0, 8); return int8(v), err }
 func parseInt16(s string) (int16, error)   { v, err := strconv.ParseInt(s, 0, 16); return int16(v), err }
 func parseInt32(s string) (int32, error)   { v, err := strconv.ParseInt(s, 0, 32); return int32(v), err }
-func parseInt64(s string) (int64, error)   { v, err := strconv.ParseInt(s, 0, 64); return int64(v), err }
+func parseInt64(s string) (int64, error)   { v, err := strconv.ParseInt(s, 0, 64); return v, err }
 func parseUint(s string) (uint, error) {
 	v, err := strconv.ParseUint(s, 0, strconv.IntSize)
 	return uint(v), err
@@ -471,7 +488,7 @@ func parseUint32(s string) (uint32, error) {
 }
 func parseUint64(s string) (uint64, error) {
 	v, err := strconv.ParseUint(s, 0, 64)
-	return uint64(v), err
+	return v, err
 }
 func parseFloat32(s string) (float32, error) {
 	v, err := strconv.ParseFloat(s, 32)
