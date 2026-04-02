@@ -8,15 +8,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// writeKeyToFile writes a PEM-encoded key to a file.
-func writeKeyToFile(tb testing.TB, pemData string, filePath string) {
+func writeFile(tb testing.TB, data string, name string) {
 	tb.Helper()
 
-	err := os.WriteFile(filePath, []byte(pemData), 0o600)
+	err := os.WriteFile(name, []byte(data), 0o600)
 	require.NoError(tb, err)
 }
 
-// writePEMToTempFile writes a PEM block to a temporary file and returns the file path.
 func writePEMToTempFile(tb testing.TB, tempDir string, pattern string, block *pem.Block) string {
 	tb.Helper()
 

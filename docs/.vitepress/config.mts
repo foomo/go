@@ -21,6 +21,8 @@ export default defineConfig({
 					{ text: 'net', link: '/net' },
 					{ text: 'option', link: '/option' },
 					{ text: 'os', link: '/os' },
+					{ text: 'runtime', link: '/runtime' },
+					{ text: 'sec', link: '/sec' },
 					{ text: 'slices', link: '/slices' },
 					{ text: 'strings', link: '/strings' },
 					{ text: 'testing', link: '/testing' },

@@ -39,7 +39,11 @@ go.work.sum
 !.goreleaser.yaml
 
 ## Node
+!.npmrc
 **/node_modules/
+
+## TypeScript
+*.tsbuildinfo
 
 ## Vitepress
 !docs/.vitepress

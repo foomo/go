@@ -1,8 +1,9 @@
 package fmt
 
 import (
-	"bytes"
 	"text/template"
+
+	"github.com/foomo/go/internal/sync"
 )
 
 // Tprintf formats a string using a template
@@ -12,7 +13,8 @@ func Tprintf(format string, pairs ...string) string {
 		return "parse error: " + err.Error()
 	}
 
-	buf := &bytes.Buffer{}
+	buf := sync.Get()
+	defer sync.Put(buf)
 
 	d := argsToAttr(pairs)
 	if err := t.Execute(buf, d); err != nil {

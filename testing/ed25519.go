@@ -91,5 +91,5 @@ func GenerateED25519PublicKey(tb testing.TB, privateKey ed25519.PrivateKey, file
 
 	publicKey := privateKey.Public().(ed25519.PublicKey) //nolint:forcetypeassert // cast is safe
 	publicKeyPem := EncodeED25519PublicKey(tb, publicKey)
-	writeKeyToFile(tb, publicKeyPem, filePath)
+	writeFile(tb, publicKeyPem, filePath)
 }
