@@ -14,7 +14,7 @@ type MyOptionsBuilder struct {
 	option.Builder[*MyOptions]
 }
 
-func MyBuilder() *MyOptionsBuilder {
+func NewMyOptionsBuilder() *MyOptionsBuilder {
 	return &MyOptionsBuilder{
 		option.Builder[*MyOptions]{},
 	}
@@ -29,7 +29,7 @@ func (b *MyOptionsBuilder) WithName(name string) *MyOptionsBuilder {
 }
 
 func ExampleBuilder() {
-	b := MyBuilder()
+	b := NewMyOptionsBuilder()
 	b.WithName("example")
 
 	o := MyOptions{}

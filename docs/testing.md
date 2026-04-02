@@ -120,6 +120,34 @@ GO_TEST_TAGS=-integration go test ./...
 GO_TEST_TAGS=short,integration,-performance go test ./...
 ```
 
+## TestMain Helpers
+
+### M
+
+```go
+type M interface {
+	Run() int
+}
+```
+
+Interface representing `testing.M`, useful for abstracting `TestMain` behavior.
+
+### MFunc
+
+```go
+type MFunc func() int
+```
+
+A wrapper type that implements the `M` interface. Useful for adapting `testing.M` to libraries like `goleak` that accept an `M`-like interface.
+
+```go
+func TestMain(m *testing.M) {
+	goleak.VerifyTestMain(testingx.MFunc(func() int {
+		return m.Run()
+	}))
+}
+```
+
 ## Network Helpers
 
 ### FreePort

@@ -34,6 +34,22 @@ func GroupBy[T any, K comparable](items []T, keyFn func(T) K) map[K][]T
 
 Groups elements into a map keyed by the result of the key function.
 
+### FilterE
+
+```go
+func FilterE[T any](items []T, fn func(T) (bool, error)) ([]T, error)
+```
+
+Like `Filter`, but the predicate can return an error. Stops and returns the first error encountered.
+
+### MapE
+
+```go
+func MapE[T, U any](items []T, fn func(T) (U, error)) ([]U, error)
+```
+
+Like `Map`, but the transform function can return an error. Stops and returns the first error encountered.
+
 ## Examples
 
 ### Filter

@@ -54,6 +54,30 @@ func RemoveAll(s string, substrings ...string) string
 
 Removes all occurrences of the given substrings in a single pass.
 
+### FirstToUpper
+
+```go
+func FirstToUpper(s string) string
+```
+
+Converts the first character of a string to uppercase.
+
+### FirstToLower
+
+```go
+func FirstToLower(s string) string
+```
+
+Converts the first character of a string to lowercase.
+
+### Compose
+
+```go
+func Compose(s string, funcs ...func(string) string) string
+```
+
+Chains multiple string transformation functions, applying each in order.
+
 ## Examples
 
 ### Case conversions

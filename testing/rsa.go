@@ -84,5 +84,5 @@ func GenerateRSAPublicKey(t *testing.T, privateKey *rsa.PrivateKey, filePath str
 	t.Helper()
 
 	publicKeyPem := EncodeRSAPublicKey(t, &privateKey.PublicKey)
-	writeKeyToFile(t, publicKeyPem, filePath)
+	writeFile(t, publicKeyPem, filePath)
 }
