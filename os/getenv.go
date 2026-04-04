@@ -11,12 +11,12 @@ import (
 )
 
 var (
-	// SliceSeperator is the delimiter used to separate elements in a slice when parsing comma-separated values.
-	SliceSeperator = ","
-	// MapSeperator is the delimiter used to separate key-value pairs within a string representing a map.
-	MapSeperator = ","
-	// MapKVSeperator is the delimiter used to separate key and value in a key-value pair.
-	MapKVSeperator = ":"
+	// SliceSeparator is the delimiter used to separate elements in a slice when parsing comma-separated values.
+	SliceSeparator = ","
+	// MapSeparator is the delimiter used to separate key-value pairs within a string representing a map.
+	MapSeparator = ","
+	// MapKVSeparator is the delimiter used to separate key and value in a key-value pair.
+	MapKVSeparator = ":"
 )
 
 // ---------------------------------- env -------------------------------------
@@ -422,7 +422,7 @@ func getenvSlice[T any](key string, def []T, parse func(string) (T, error)) ([]T
 		return def, nil
 	}
 
-	parts := strings.Split(str, SliceSeperator)
+	parts := strings.Split(str, SliceSeparator)
 
 	return slicesx.MapE(parts, func(p string) (T, error) {
 		return parse(strings.TrimSpace(p))
@@ -436,13 +436,13 @@ func getenvMap[T any](key string, def map[string]T, parse func(string) (T, error
 		return def, nil
 	}
 
-	parts := strings.Split(str, MapSeperator)
+	parts := strings.Split(str, MapSeparator)
 
 	result := make(map[string]T, len(parts))
 	for _, part := range parts {
 		part = strings.TrimSpace(part)
 
-		kv := strings.SplitN(part, MapKVSeperator, 2)
+		kv := strings.SplitN(part, MapKVSeparator, 2)
 		if len(kv) != 2 {
 			return nil, fmt.Errorf("invalid key:value pair: %q", part)
 		}
