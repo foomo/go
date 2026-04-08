@@ -1,10 +1,19 @@
 import { defineConfig } from 'vitepress'
 
+// https://vitepress.dev/reference/site-config
 export default defineConfig({
-	base: '/go/',
 	title: 'go',
 	description: 'Go standard library extension, adding the missing parts used in the foomo ecosystem to keep dry.',
+	lang: "en-US",
+	lastUpdated: true,
+	appearance: "dark",
+	ignoreDeadLinks: true,
+	base: '/go/',
+	sitemap: {
+		hostname: 'https://foomo.github.io/go',
+	},
 	themeConfig: {
+		// https://vitepress.dev/reference/default-theme-config
 		logo: '/logo.png',
 		outline: [2, 4],
 		sidebar: [
@@ -48,9 +57,11 @@ export default defineConfig({
 				],
 			},
 		],
+		socialLinks: [
+			{ icon: 'github', link: 'https://github.com/foomo/gofuncy' },
+		],
 		editLink: {
 			pattern: 'https://github.com/foomo/go/edit/main/docs/:path',
-			text: 'Suggest changes to this page',
 		},
 		search: {
 			provider: 'local',
@@ -58,17 +69,18 @@ export default defineConfig({
 		footer: {
 			message: 'Made with ♥ <a href="https://www.foomo.org">foomo</a> by <a href="https://www.bestbytes.com">bestbytes</a>',
 		},
-		socialLinks: [
-			{
-				icon: 'github',
-				link: 'https://github.com/foomo/go',
-			},
-		],
+	},
+	markdown: {
+		theme: {
+			light: 'catppuccin-latte',
+			dark: 'catppuccin-frappe',
+		}
 	},
 	head: [
 		['meta', { name: 'theme-color', content: '#ffffff' }],
 		['link', { rel: 'icon', href: '/logo.png' }],
 		['meta', { name: 'author', content: 'foomo by bestbytes' }],
+		// OpenGraph
 		['meta', { property: 'og:title', content: 'foomo/go' }],
 		[
 			'meta',
@@ -93,21 +105,8 @@ export default defineConfig({
 			},
 		],
 		[
-			'meta',
-			{
-				name: 'viewport',
-				content: 'width=device-width, initial-scale=1.0, viewport-fit=cover',
+			'meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover',
 			},
 		],
-	],
-	markdown: {
-		theme: {
-			dark: 'github-dark',
-			light: 'github-light',
-		}
-	},
-	sitemap: {
-		hostname: 'https://foomo.github.io/go',
-	},
-	ignoreDeadLinks: true,
+	]
 })
