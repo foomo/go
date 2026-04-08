@@ -11,9 +11,9 @@ import osx "github.com/foomo/go/os"
 ## Package Variables
 
 ```go
-var SliceSeperator  = ","   // delimiter for slice elements
-var MapSeperator    = ","   // delimiter for map key-value pairs
-var MapKVSeperator  = ":"   // delimiter between key and value
+var SliceSeparator  = ","   // delimiter for slice elements
+var MapSeparator    = ","   // delimiter for map key-value pairs
+var MapKVSeparator  = ":"   // delimiter between key and value
 ```
 
 ## API

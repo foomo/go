@@ -23,6 +23,7 @@ export default defineConfig({
 					{ text: 'os', link: '/os' },
 					{ text: 'runtime', link: '/runtime' },
 					{ text: 'sec', link: '/sec' },
+					{ text: 'slog', link: '/slog' },
 					{ text: 'slices', link: '/slices' },
 					{ text: 'strings', link: '/strings' },
 					{ text: 'testing', link: '/testing' },

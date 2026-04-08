@@ -1,6 +1,6 @@
 # strings
 
-String manipulation utilities including case conversions, padding, and substring removal.
+String manipulation utilities including case conversions, padding, substring removal, validation, and prefix/suffix matching.
 
 ## Import
 
@@ -78,6 +78,41 @@ func Compose(s string, funcs ...func(string) string) string
 
 Chains multiple string transformation functions, applying each in order.
 
+### Validation
+
+```go
+func IsEmpty(s string) bool
+func IsBlank(s string) bool
+func IsAnyEmpty(s ...string) bool
+func IsAnyBlank(strings ...string) bool
+func IsAlpha(s string) bool
+func IsAlphanumeric(s string) bool
+func IsNumeric(s string) bool
+func IsNumerical(s string) bool
+```
+
+| Function | Description |
+|----------|-------------|
+| `IsEmpty` | Returns `true` if the string has zero length. |
+| `IsBlank` | Returns `true` if the string is empty or contains only whitespace. |
+| `IsAnyEmpty` | Returns `true` if any of the provided strings is empty. |
+| `IsAnyBlank` | Returns `true` if any of the provided strings is blank. |
+| `IsAlpha` | Returns `true` if the string contains only Unicode letters. |
+| `IsAlphanumeric` | Returns `true` if the string contains only Unicode letters and digits. |
+| `IsNumeric` | Returns `true` if the string contains only Unicode digits. |
+| `IsNumerical` | Returns `true` if the string represents a number (digits with an optional decimal point). |
+
+Empty strings return `false` for `IsAlpha`, `IsAlphanumeric`, `IsNumeric`, and `IsNumerical`.
+
+### Prefix / Suffix
+
+```go
+func HasAnyPrefix(s string, prefixes ...string) bool
+func HasAnySuffix(s string, suffixes ...string) bool
+```
+
+Returns `true` if the string starts (or ends) with any of the provided values. Returns `false` when the string is empty or no candidates are given.
+
 ## Examples
 
 ### Case conversions
@@ -104,4 +139,23 @@ fmt.Printf("'%s'", stringsx.PadLeft("hello", 10))
 ```go
 result := stringsx.RemoveAll("hello world", "o", "l")
 fmt.Println(result) // "he wrd"
+```
+
+### Validation
+
+```go
+stringsx.IsEmpty("")           // true
+stringsx.IsBlank("  \t")      // true
+stringsx.IsAnyEmpty("a", "")  // true
+stringsx.IsAlpha("Hello")     // true
+stringsx.IsAlphanumeric("Go1") // true
+stringsx.IsNumeric("12345")   // true
+stringsx.IsNumerical("3.14")  // true
+```
+
+### Prefix / Suffix
+
+```go
+stringsx.HasAnyPrefix("/api/users", "/api", "/admin") // true
+stringsx.HasAnySuffix("image.png", ".jpg", ".png")    // true
 ```
