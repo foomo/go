@@ -65,14 +65,14 @@ const (
 	Benchmark   Tag = "benchmark"
 	Blocking    Tag = "blocking"
 	CI          Tag = "ci"
-	CPU         Tag = "profile"
+	CPU         Tag = "cpu"
 	Docker      Tag = "docker"
 	E2          Tag = "e2e"
 	Generate    Tag = "generate"
 	Integration Tag = "integration"
 	Load        Tag = "load"
 	Memory      Tag = "memory"
-	MemoryLeak  Tag = "unsafe"
+	MemoryLeak  Tag = "memoryleak"
 	Mutex       Tag = "mutex"
 	MutexLeak   Tag = "mutexleak"
 	Parallel    Tag = "parallel"
@@ -153,7 +153,7 @@ func TestMain(m *testing.M) {
 ### FreePort
 
 ```go
-func FreePort(t *testing.T) string
+func FreePort(tb testing.TB) string
 ```
 
 Returns a free port on localhost. Calls `t.Fatal` on error.
@@ -182,11 +182,11 @@ func GenerateRSAPublicKey(t *testing.T, privateKey *rsa.PrivateKey, filePath str
 ### ED25519
 
 ```go
-func GenerateED25519PrivateKey(t *testing.T) ed25519.PrivateKey
-func EncodeED25519PrivateKey(t *testing.T, privateKey ed25519.PrivateKey) string
-func EncodeED25519PublicKey(t *testing.T, publicKey ed25519.PublicKey) string
-func GenerateED25519KeyPair(t *testing.T) (public, private string)
-func GenerateED25519PublicKey(t *testing.T, privateKey ed25519.PrivateKey, filePath string)
+func GenerateED25519PrivateKey(tb testing.TB) ed25519.PrivateKey
+func EncodeED25519PrivateKey(tb testing.TB, privateKey ed25519.PrivateKey) string
+func EncodeED25519PublicKey(tb testing.TB, publicKey ed25519.PublicKey) string
+func GenerateED25519KeyPair(tb testing.TB) (public, private string)
+func GenerateED25519PublicKey(tb testing.TB, privateKey ed25519.PrivateKey, filePath string)
 ```
 
 ### Example

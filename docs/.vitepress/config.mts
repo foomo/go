@@ -36,6 +36,7 @@ export default defineConfig({
 					{ text: 'slices', link: '/slices' },
 					{ text: 'strings', link: '/strings' },
 					{ text: 'testing', link: '/testing' },
+					{ text: 'time', link: '/time' },
 				],
 			},
 			{
@@ -58,7 +59,7 @@ export default defineConfig({
 			},
 		],
 		socialLinks: [
-			{ icon: 'github', link: 'https://github.com/foomo/gofuncy' },
+			{ icon: 'github', link: 'https://github.com/foomo/go' },
 		],
 		editLink: {
 			pattern: 'https://github.com/foomo/go/edit/main/docs/:path',

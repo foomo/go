@@ -1,4 +1,4 @@
-package option_test
+package testing_test
 
 import (
 	"testing"

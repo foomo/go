@@ -1,4 +1,4 @@
-package option
+package options
 
 type (
 	// Option is a functional option.
