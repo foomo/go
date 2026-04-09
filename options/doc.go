@@ -1,2 +1,2 @@
-// Package option provides a set of options for the client.
+// Package options provides a set of options for the client.
 package options

@@ -31,6 +31,28 @@ package.Function
   dir/file.go:42
 ```
 
+### Recover
+
+```go
+func Recover(fn func()) error
+```
+
+Calls `fn` and converts any panic into a `*PanicError`. Returns `nil` if `fn` does not panic.
+
+### PanicError
+
+```go
+type PanicError struct {
+	Value any    // the original value passed to panic()
+	Stack string // full stack trace at the point of the panic
+}
+
+func (e *PanicError) Error() string
+func (e *PanicError) Unwrap() error
+```
+
+Represents a recovered panic with captured runtime context. `Unwrap` returns the panic value if it implements `error`, enabling `errors.Is` and `errors.As` to reach through the wrapper.
+
 ## Examples
 
 ### Caller
@@ -39,6 +61,20 @@ package.Function
 short, full, file, line, ok := runtimex.Caller(0)
 fmt.Printf("%s (%s) at %s:%d\n", short, full, file, line)
 // e.g. main.main (main.main) at main/main.go:12
+```
+
+### Recover
+
+```go
+err := runtimex.Recover(func() {
+	panic("something went wrong")
+})
+
+var pe *runtimex.PanicError
+if errors.As(err, &pe) {
+	fmt.Println(pe.Value) // "something went wrong"
+	fmt.Println(pe.Stack) // full stack trace
+}
 ```
 
 ### StackTrace

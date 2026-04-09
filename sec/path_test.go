@@ -1,12 +1,32 @@
 package sec_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/foomo/go/sec"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func ExampleFilename() {
+	path, err := sec.Filename("/tmp", "a", "b", "file.txt")
+	if err != nil {
+		fmt.Println("error:", err)
+		return
+	}
+
+	fmt.Println(path)
+
+	// Output: /tmp/a/b/file.txt
+}
+
+func ExampleFilename_traversal() {
+	_, err := sec.Filename("/tmp", "../etc/passwd")
+	fmt.Println(err)
+
+	// Output: path traversal attempt
+}
 
 // TestFilename verifies that Filename safely joins paths within a root directory,
 // preventing path traversal attacks (gosec G304 / CWE-22).
