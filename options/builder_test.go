@@ -1,9 +1,9 @@
-package option_test
+package options_test
 
 import (
 	"fmt"
 
-	"github.com/foomo/go/option"
+	"github.com/foomo/go/options"
 )
 
 type MyOptions struct {
@@ -11,12 +11,12 @@ type MyOptions struct {
 }
 
 type MyOptionsBuilder struct {
-	option.Builder[*MyOptions]
+	options.Builder[*MyOptions]
 }
 
 func NewMyOptionsBuilder() *MyOptionsBuilder {
 	return &MyOptionsBuilder{
-		option.Builder[*MyOptions]{},
+		options.Builder[*MyOptions]{},
 	}
 }
 
@@ -33,7 +33,7 @@ func ExampleBuilder() {
 	b.WithName("example")
 
 	o := MyOptions{}
-	option.Build(&o, b)
+	options.Build(&o, b)
 
 	fmt.Println(o)
 
@@ -41,12 +41,12 @@ func ExampleBuilder() {
 }
 
 type MyOptionsBuilderE struct {
-	option.BuilderE[*MyOptions]
+	options.BuilderE[*MyOptions]
 }
 
 func MyBuilderE() *MyOptionsBuilderE {
 	return &MyOptionsBuilderE{
-		option.BuilderE[*MyOptions]{},
+		options.BuilderE[*MyOptions]{},
 	}
 }
 
@@ -64,7 +64,7 @@ func ExampleBuilderE() {
 	b.WithName("example")
 
 	o := MyOptions{}
-	if err := option.BuildE(&o, b); err != nil {
+	if err := options.BuildE(&o, b); err != nil {
 		panic(err)
 	}
 

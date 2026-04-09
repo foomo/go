@@ -1,4 +1,4 @@
-package option
+package options
 
 type (
 	// Builder is a generic option builder that collects functional options.

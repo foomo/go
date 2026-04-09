@@ -1,17 +1,17 @@
-package option_test
+package options_test
 
 import (
 	"errors"
 	"fmt"
 
-	"github.com/foomo/go/option"
+	"github.com/foomo/go/options"
 )
 
 type Server struct {
 	Name string
 }
 
-func WithName(p string) option.Option[*Server] {
+func WithName(p string) options.Option[*Server] {
 	return func(s *Server) {
 		s.Name = p
 	}
@@ -20,7 +20,7 @@ func WithName(p string) option.Option[*Server] {
 func ExampleApply() {
 	s := &Server{}
 
-	option.Apply(
+	options.Apply(
 		s,
 		WithName("localhost"),
 	)
@@ -31,7 +31,7 @@ func ExampleApply() {
 	// localhost
 }
 
-func WithNameE(p string) option.OptionE[*Server] {
+func WithNameE(p string) options.OptionE[*Server] {
 	return func(s *Server) error {
 		if len(p) == 0 {
 			return errors.New("invalid name")
@@ -46,7 +46,7 @@ func WithNameE(p string) option.OptionE[*Server] {
 func ExampleApplyE() {
 	s := &Server{}
 
-	err := option.ApplyE(
+	err := options.ApplyE(
 		s,
 		WithNameE("localhost"),
 	)
