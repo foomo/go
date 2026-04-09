@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Caller returns caller information for the function skip frames up the call stack.
 func Caller(skip int) (shortName, fullName, file string, line int, ok bool) { //nolint:nonamedreturns
 	pc, file, line, ok := runtime.Caller(skip + 1)
 	if !ok {

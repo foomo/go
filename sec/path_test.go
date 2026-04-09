@@ -55,6 +55,18 @@ func TestFilename(t *testing.T) {
 			root: "/tmp",
 			want: "/tmp",
 		},
+		{
+			name:    "null byte in element",
+			root:    "/tmp",
+			elem:    []string{"file\x00.txt"},
+			wantErr: "null byte in path element",
+		},
+		{
+			name:    "null byte in root",
+			root:    "/tmp\x00evil",
+			elem:    []string{"file.txt"},
+			wantErr: "null byte in root path",
+		},
 	}
 
 	for _, tt := range tests {

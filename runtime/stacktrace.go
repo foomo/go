@@ -35,7 +35,7 @@ func StackTrace(size, skip int) string {
 		ret.WriteString(":")
 		ret.WriteString(strconv.Itoa(frame.Line))
 
-		if !more || len(ret.String()) == size {
+		if !more {
 			break
 		}
 

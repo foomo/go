@@ -12,6 +12,16 @@ func Filename(root string, elem ...string) (string, error) {
 		return "", fmt.Errorf("root required")
 	}
 
+	if strings.ContainsRune(root, '\x00') {
+		return "", fmt.Errorf("null byte in root path")
+	}
+
+	for _, e := range elem {
+		if strings.ContainsRune(e, '\x00') {
+			return "", fmt.Errorf("null byte in path element")
+		}
+	}
+
 	fullPath := filepath.Join(root, filepath.Join(elem...))
 	cleanPath := filepath.Clean(fullPath)
 
