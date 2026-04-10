@@ -31,7 +31,7 @@ endif
 
 .PHONY: check
 ## Run lint & tests
-check: tidy generate lint test
+check: tidy generate lint test audit
 
 .PHONY: tidy
 ## Run go mod tidy
