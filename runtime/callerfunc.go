@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func CallerFunc(skip int) (string, bool) { //nolint:nonamedreturns
+func CallerFunc(skip int) (string, bool) {
 	pc, _, _, ok := runtime.Caller(skip + 1)
 	if !ok {
 		return "unknown", false

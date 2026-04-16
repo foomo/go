@@ -64,6 +64,7 @@ func (t *ExampleTB) Fatal(args ...any) {
 	_, _ = fmt.Fprint(t.Output(), "fatal: ")
 	_, _ = fmt.Fprint(t.Output(), args...)
 	_, _ = fmt.Fprint(t.Output(), "\n")
+
 	os.Exit(1)
 }
 
@@ -71,6 +72,7 @@ func (t *ExampleTB) Fatalf(format string, args ...any) {
 	t.failed = true
 	_, _ = fmt.Fprintf(t.Output(), "fatal: "+format, args...)
 	_, _ = fmt.Fprint(t.Output(), "\n")
+
 	os.Exit(1)
 }
 
