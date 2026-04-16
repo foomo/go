@@ -44,7 +44,7 @@ Set the `GO_TEST_TAGS` environment variable to a comma-separated list of tags. P
 ### Tags
 
 ```go
-func Tags(t *testing.T, tags ...tagx.Tag)
+func Tags(tb testing.TB, tags ...tagx.Tag)
 ```
 
 Marks a test with the given tags and skips it if the current `GO_TEST_TAGS` rules say so. Call it as the first line in your test function.
@@ -198,5 +198,32 @@ func TestJWT(t *testing.T) {
 
 	// Or generate ED25519 keys
 	edPub, edPriv := testingx.GenerateED25519KeyPair(t)
+}
+```
+
+## ExampleTB
+
+### ExampleTB
+
+```go
+type ExampleTB struct {
+	testing.TB
+	// unexported fields
+}
+
+func NewExampleTB() *ExampleTB
+```
+
+A lightweight `testing.TB` implementation for use in `Example*` test functions. Since `Example` functions cannot receive a `*testing.T`, `ExampleTB` provides a minimal substitute that writes output to `os.Stdout` and derives its name from the calling function via `runtime.CallerFunc`.
+
+Implements: `Name`, `Helper`, `Cleanup`, `Fail`, `FailNow`, `Failed`, `Error`, `Errorf`, `Fatal`, `Fatalf`, `Log`, `Logf`, `Skip`, `SkipNow`, `Skipf`, `Skipped`, `Setenv`, `Chdir`, `TempDir`, `Context`, `Output`, `Run`.
+
+### Example
+
+```go
+func ExampleFreePort() {
+	tb := testingx.NewExampleTB()
+	addr := testingx.FreePort(tb)
+	fmt.Println(addr)
 }
 ```

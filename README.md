@@ -10,6 +10,20 @@
 
 Go standard library extension, adding the missing parts used in the foomo ecosystem to keep [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
+## Features
+
+- **fmt** — Template string formatting with `%{.key}` syntax
+- **net** — Free port allocation for tests and local development
+- **options** — Generic functional options pattern (`Option`, `OptionE`, `Builder`, `BuilderE`)
+- **os** — Typed `Getenv`/`MustGetenv` for scalars, slices, and maps with defaults
+- **runtime** — Enriched caller introspection (`Caller`, `CallerFunc`, `StackTrace`) and panic recovery
+- **sec** — Safe path joining to prevent directory traversal (gosec G304)
+- **slices** — Generic slice utilities: `Filter`, `Map`, `GroupBy` (with error variants)
+- **slog** — Test-friendly `slog.Handler` that writes to `testing.TB` output
+- **strings** — Case conversions, padding, validation, prefix/suffix matching, and composition
+- **testing** — Tag-based test filtering via `GO_TEST_TAGS`, crypto key helpers, `ExampleTB`
+- **time** — Context-aware `Sleep`
+
 ## How to Contribute
 
 Contributions are welcome! Please read the [contributing guide](docs/CONTRIBUTING.md).
