@@ -20,11 +20,11 @@ func ToKebab(s string) string
 func ToScreamingKebab(s string) string
 func ToCamel(s string) string
 func ToLowerCamel(s string) string
-func ToDelimited(s string, delimiter rune) string
-func ToScreamingDelimited(s string, delimiter rune, acronym string, screaming bool) string
+func ToDelimited(s string, delimiter uint8) string
+func ToScreamingDelimited(s string, delimiter uint8, ignore string, screaming bool) string
 ```
 
-Re-exported from [strcase](https://github.com/iancoleman/strcase) for convenience.
+Locally implemented string case conversions.
 
 | Function | Input | Output |
 |----------|-------|--------|

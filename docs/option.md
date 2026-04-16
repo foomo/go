@@ -5,7 +5,7 @@ Functional options pattern support with generics.
 ## Import
 
 ```go
-import "github.com/foomo/go/option"
+import "github.com/foomo/go/options"
 ```
 
 ## Types
@@ -83,7 +83,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/foomo/go/option"
+	"github.com/foomo/go/options"
 )
 
 type Server struct {
@@ -91,13 +91,13 @@ type Server struct {
 	Port int
 }
 
-func WithName(name string) option.Option[*Server] {
+func WithName(name string) options.Option[*Server] {
 	return func(s *Server) {
 		s.Name = name
 	}
 }
 
-func WithPort(port int) option.Option[*Server] {
+func WithPort(port int) options.Option[*Server] {
 	return func(s *Server) {
 		s.Port = port
 	}
@@ -105,7 +105,7 @@ func WithPort(port int) option.Option[*Server] {
 
 func main() {
 	s := &Server{}
-	option.Apply(s, WithName("localhost"), WithPort(8080))
+	options.Apply(s, WithName("localhost"), WithPort(8080))
 	fmt.Println(s.Name) // localhost
 	fmt.Println(s.Port) // 8080
 }
@@ -115,7 +115,7 @@ func main() {
 
 ```go
 type ServerBuilder struct {
-	option.Builder[*Server]
+	options.Builder[*Server]
 }
 
 func (b *ServerBuilder) Name(name string) *ServerBuilder {
@@ -131,7 +131,7 @@ func (b *ServerBuilder) Port(port int) *ServerBuilder {
 func main() {
 	s := &Server{}
 	b := &ServerBuilder{}
-	option.Build(s, b.Name("localhost").Port(8080))
+	options.Build(s, b.Name("localhost").Port(8080))
 	fmt.Println(s.Name) // localhost
 	fmt.Println(s.Port) // 8080
 }
@@ -140,7 +140,7 @@ func main() {
 ### Error handling with ApplyE
 
 ```go
-func WithValidatedPort(port int) option.OptionE[*Server] {
+func WithValidatedPort(port int) options.OptionE[*Server] {
 	return func(s *Server) error {
 		if port < 1 || port > 65535 {
 			return fmt.Errorf("invalid port: %d", port)
@@ -150,6 +150,6 @@ func WithValidatedPort(port int) option.OptionE[*Server] {
 	}
 }
 
-err := option.ApplyE(s, WithValidatedPort(99999))
+err := options.ApplyE(s, WithValidatedPort(99999))
 // err: invalid port: 99999
 ```

@@ -18,6 +18,14 @@ func Caller(skip int) (shortName, fullName, file string, line int, ok bool)
 
 Enriched wrapper around `runtime.Caller`. Returns the short function name (e.g. `pkg.Func`), the fully qualified name, a simplified file path (`dir/file.go`), and the line number. The `skip` parameter works like `runtime.Caller` — use `0` for the immediate caller.
 
+### CallerFunc
+
+```go
+func CallerFunc(skip int) (string, bool)
+```
+
+Returns only the bare function name (without the package path or receiver) for the caller `skip` frames up the call stack. Returns `"unknown", false` if the caller cannot be determined.
+
 ### StackTrace
 
 ```go
@@ -61,6 +69,13 @@ Represents a recovered panic with captured runtime context. `Unwrap` returns the
 short, full, file, line, ok := runtimex.Caller(0)
 fmt.Printf("%s (%s) at %s:%d\n", short, full, file, line)
 // e.g. main.main (main.main) at main/main.go:12
+```
+
+### CallerFunc
+
+```go
+name, ok := runtimex.CallerFunc(0)
+fmt.Println(name) // e.g. "main"
 ```
 
 ### Recover
