@@ -37,8 +37,10 @@ func WaitForFreePorts(tb testing.TB, ports ...int) {
 
 	for _, port := range ports {
 		wg.Add(1)
+
 		go func(port int) {
 			defer wg.Done()
+
 			if err := net.WaitForFreePort(tb.Context(), port, 10*time.Second); err != nil {
 				tb.Fatal(err)
 			}
