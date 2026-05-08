@@ -153,15 +153,47 @@ func TestMain(m *testing.M) {
 ### FreePort
 
 ```go
-func FreePort(tb testing.TB) string
+func FreePort(tb testing.TB) int
 ```
 
-Returns a free port on localhost. Calls `t.Fatal` on error.
+Returns a free port on localhost. Calls `tb.Fatal` on error.
 
 ```go
 func TestServer(t *testing.T) {
-	addr := testingx.FreePort(t)
-	// addr = "127.0.0.1:54321"
+	port := testingx.FreePort(t)
+	// port = 54321
+}
+```
+
+### FreePorts
+
+```go
+func FreePorts(tb testing.TB, n int) []int
+```
+
+Returns `n` free ports on localhost. Calls `tb.Fatal` on error. All listeners are held open until the call returns, so the returned ports are guaranteed not to collide with each other.
+
+```go
+func TestCluster(t *testing.T) {
+	ports := testingx.FreePorts(t, 3)
+	// ports = [54321, 54322, 54323]
+}
+```
+
+### WaitForFreePorts
+
+```go
+func WaitForFreePorts(tb testing.TB, ports ...int)
+```
+
+Waits in parallel for TCP connections to succeed on each of the given localhost ports. Each wait has a 10s timeout and calls `tb.Fatal` on failure. Useful for blocking until services started by the test have come up.
+
+```go
+func TestServerStarts(t *testing.T) {
+	port := testingx.FreePort(t)
+	go startServer(t, port)
+	testingx.WaitForFreePorts(t, port)
+	// server is now reachable
 }
 ```
 

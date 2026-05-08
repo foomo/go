@@ -37,6 +37,7 @@ export default defineConfig({
 					{ text: 'strings', link: '/strings' },
 					{ text: 'testing', link: '/testing' },
 					{ text: 'time', link: '/time' },
+					{ text: 'types', link: '/types' },
 				],
 			},
 			{

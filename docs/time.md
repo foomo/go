@@ -18,7 +18,17 @@ func Sleep(ctx context.Context, d time.Duration) error
 
 Waits for the specified duration or until the context is canceled, whichever occurs first. Returns the context error if canceled before the delay elapses.
 
-## Example
+### WaitFor
+
+```go
+func WaitFor(ctx context.Context, fn func(context.Context) (bool, error), timeout, interval time.Duration) error
+```
+
+Polls `fn` until it returns `true`, returns an error, or the timeout deadline elapses. Sleeps `interval` between attempts using context-aware `Sleep`, so a canceled context aborts the wait. Returns `context.DeadlineExceeded` if the deadline is reached without success.
+
+## Examples
+
+### Sleep
 
 ```go
 ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
@@ -45,4 +55,16 @@ if err != nil {
 // Output:
 // Sleep completed successfully
 // Sleep cancelled: context deadline exceeded
+```
+
+### WaitFor
+
+```go
+// Poll a readiness check up to 10s, every 250ms.
+err := timex.WaitFor(ctx, func(ctx context.Context) (bool, error) {
+	return service.Ready(ctx), nil
+}, 10*time.Second, 250*time.Millisecond)
+if err != nil {
+	log.Fatal(err)
+}
 ```

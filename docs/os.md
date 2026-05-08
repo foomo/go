@@ -1,6 +1,6 @@
 # os
 
-Typed environment variable parsing with defaults.
+Typed environment variable parsing with defaults, plus path expansion helpers.
 
 ## Import
 
@@ -118,6 +118,24 @@ func GetenvDurationMap(key string, def map[string]time.Duration) (map[string]tim
 ::: warning Deprecated
 `GetenvStringMapString` is deprecated — use `GetenvStringMap` instead.
 :::
+
+## Path Expansion
+
+### Expand
+
+```go
+func Expand(s string) (string, error)
+```
+
+Expands a leading `~/` to the user's home directory and resolves environment variable references via `os.ExpandEnv`. Returns an error if the home directory cannot be determined.
+
+```go
+path, err := osx.Expand("~/.config/$APP_NAME/config.yaml")
+if err != nil {
+	log.Fatal(err)
+}
+fmt.Println(path) // e.g. /Users/alice/.config/myapp/config.yaml
+```
 
 ## Examples
 
