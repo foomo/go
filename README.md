@@ -1,6 +1,7 @@
-[![Build Status](https://github.com/foomo/go/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/foomo/go/actions/workflows/test.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/foomo/go)](https://goreportcard.com/report/github.com/foomo/go)
-[![GoDoc](https://godoc.org/github.com/foomo/go?status.svg)](https://godoc.org/github.com/foomo/go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/foomo/go?style=flat-square)](https://goreportcard.com/report/github.com/foomo/go)
+[![GoDoc](https://img.shields.io/badge/GoDoc-✓-informational.svg?style=flat-square&logo=go)](https://godoc.org/github.com/foomo/go)
+[![Coverage](https://img.shields.io/codecov/c/github/foomo/go?style=flat-square&logo=github)](https://app.codecov.io/gh/foomo/go)
+[![GitHub Stars](https://img.shields.io/github/stars/foomo/go.svg?style=flat-square&logo=github)](https://github.com/foomo/go)
 
 <p align="center">
   <img alt="go" src="docs/public/logo.png" width="400" height="400"/>
