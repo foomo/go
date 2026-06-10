@@ -26,6 +26,7 @@ export default defineConfig({
 			{
 				text: 'Packages',
 				items: [
+					{ text: 'errors', link: '/errors' },
 					{ text: 'fmt', link: '/fmt' },
 					{ text: 'net', link: '/net' },
 					{ text: 'option', link: '/option' },
