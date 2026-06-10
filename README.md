@@ -13,6 +13,7 @@ Go standard library extension, adding the missing parts used in the foomo ecosys
 
 ## Features
 
+- **errors** — Variadic match helpers (`AsAny`, `IsAny`) wrapping `errors.As` / `errors.Is`
 - **fmt** — Template string formatting with `%{.key}` syntax
 - **net** — Free port allocation and TCP connection wait helpers (`FreePort`, `FreePorts`, `WaitFor`, `WaitForFreePort`)
 - **options** — Generic functional options pattern (`Option`, `OptionE`, `Builder`, `BuilderE`)
