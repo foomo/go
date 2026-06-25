@@ -1,6 +1,6 @@
 # time
 
-Context-aware time utilities.
+Context-aware time utilities and duration parsing.
 
 ## Import
 
@@ -25,6 +25,14 @@ func WaitFor(ctx context.Context, fn func(context.Context) (bool, error), timeou
 ```
 
 Polls `fn` until it returns `true`, returns an error, or the timeout deadline elapses. Sleeps `interval` between attempts using context-aware `Sleep`, so a canceled context aborts the wait. Returns `context.DeadlineExceeded` if the deadline is reached without success.
+
+### ParseDuration
+
+```go
+func ParseDuration(s string) (time.Duration, error)
+```
+
+Parses a duration string like `time.ParseDuration`, but also accepts the `d` (day, 24h) and `w` (week, 168h) units. Valid units: `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`, `d`, `w`.
 
 ## Examples
 
@@ -67,4 +75,18 @@ err := timex.WaitFor(ctx, func(ctx context.Context) (bool, error) {
 if err != nil {
 	log.Fatal(err)
 }
+```
+
+### ParseDuration
+
+```go
+for _, s := range []string{"2w", "5d", "1w2d3h"} {
+	d, _ := timex.ParseDuration(s)
+	fmt.Printf("%s = %s\n", s, d)
+}
+
+// Output:
+// 2w = 336h0m0s
+// 5d = 120h0m0s
+// 1w2d3h = 219h0m0s
 ```
