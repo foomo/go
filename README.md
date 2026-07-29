@@ -1,4 +1,3 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/foomo/go?style=flat-square)](https://goreportcard.com/report/github.com/foomo/go)
 [![GoDoc](https://img.shields.io/badge/GoDoc-✓-informational.svg?style=flat-square&logo=go)](https://godoc.org/github.com/foomo/go)
 [![Coverage](https://img.shields.io/codecov/c/github/foomo/go?style=flat-square&logo=github)](https://app.codecov.io/gh/foomo/go)
 [![GitHub Stars](https://img.shields.io/github/stars/foomo/go.svg?style=flat-square&logo=github)](https://github.com/foomo/go)
