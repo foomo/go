@@ -59,6 +59,7 @@ linters:
     goconst:
       min-occurrences: 5
       ignore-tests: true
+      ignore-string-values: [ unknown ]
     # https://golangci-lint.run/docs/linters/configuration/#testifylint
     testifylint:
       disable: [ float-compare ]

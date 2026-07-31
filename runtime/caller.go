@@ -2,18 +2,23 @@ package runtime
 
 import (
 	"path"
-	"runtime"
+	stdruntime "runtime"
 	"strings"
 )
 
 // Caller returns caller information for the function skip frames up the call stack.
 func Caller(skip int) (shortName, fullName, file string, line int, ok bool) { //nolint:nonamedreturns
-	pc, file, line, ok := runtime.Caller(skip + 1)
-	if !ok {
+	var pcs [1]uintptr
+	if stdruntime.Callers(skip+2, pcs[:]) == 0 {
 		return "unknown", "Unknown", "unknown", 0, false
 	}
 
-	fullName = runtime.FuncForPC(pc).Name()
+	fr, _ := stdruntime.CallersFrames(pcs[:]).Next()
+	if fr.Function == "" {
+		return "unknown", "Unknown", "unknown", 0, false
+	}
+
+	fullName, file, line = fr.Function, fr.File, fr.Line
 
 	dirname, filename := path.Split(file)
 	file = path.Join(path.Base(dirname), filename)

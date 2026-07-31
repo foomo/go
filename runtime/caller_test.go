@@ -49,3 +49,17 @@ func TestCaller(t *testing.T) {
 	assert.Equal(t, "runtime/caller_test.go", file)
 	assert.Equal(t, 14, line)
 }
+
+// inlinedCaller is a leaf small enough for the compiler to inline into its
+// caller. With FuncForPC the reported name would be the inliner; via
+// CallersFrames it is correctly attributed to inlinedCaller.
+func inlinedCaller() string {
+	_, fullName, _, _, _ := runtime.Caller(0) //nolint:dogsled
+	return fullName
+}
+
+func TestCallerInlined(t *testing.T) {
+	t.Parallel()
+
+	assert.Equal(t, "github.com/foomo/go/runtime_test.inlinedCaller", inlinedCaller())
+}

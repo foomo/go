@@ -39,6 +39,42 @@ package.Function
   dir/file.go:42
 ```
 
+### CallFrame
+
+```go
+func CallFrame(skip int) Frame
+```
+
+Returns the call site `skip` levels above its own caller — `skip=0` is the function that called `CallFrame`, `skip=1` that function's caller, and so on. Symbolisation is memoised per program counter, so the steady-state cost is one `runtime.Callers` into a stack array plus a map load, with no allocation. Returns a zero `Frame` (see `Frame.Zero`) when the stack is unavailable.
+
+### Frame
+
+```go
+type Frame struct {
+	Pkg  string // full import path, e.g. "github.com/foomo/go/runtime"
+	Inst string // receiver type name for methods; empty for package-level funcs
+	Func string // function or method name, incl. suffixes like ".func1" or "-fm"
+	File string // absolute path as recorded at build time
+	Line int
+}
+
+func (f Frame) Name() string
+func (f Frame) Short() string
+func (f Frame) Zero() bool
+```
+
+Identifies a single call site. `Name` reassembles the qualified name (`pkg.Recv.Func`), suitable for the `code.function.name` attribute; the pointer-receiver marker is not preserved. `Short` renders the receiver-qualified name without the package path (`Recv.Func`). `Zero` reports whether the frame could not be resolved.
+
+### Memo
+
+```go
+type Memo[T any] struct { /* ... */ }
+
+func (mo *Memo[T]) Get(skip int, derive func(Frame) T) T
+```
+
+Caches a value of type `T` per call site, so per-site derived data — a span name, a preformatted attribute slice, a logger — is computed once for the life of the process rather than on every call. `Get` resolves the call site `skip` levels above its caller (`skip=0` is the function that called `Get`) and returns the memoised value, invoking `derive` at most once per site under normal conditions. `derive` must be pure and its result safe to share; values handed out by `Get` are shared across all calls from that site and must be treated as read-only. The zero value is ready to use and a `Memo` must not be copied after first use.
+
 ### Recover
 
 ```go
@@ -76,6 +112,28 @@ fmt.Printf("%s (%s) at %s:%d\n", short, full, file, line)
 ```go
 name, ok := runtimex.CallerFunc(0)
 fmt.Println(name) // e.g. "main"
+```
+
+### CallFrame
+
+```go
+f := runtimex.CallFrame(0)
+fmt.Println(f.Name())  // e.g. "main.main"
+fmt.Println(f.Short()) // e.g. "main"
+```
+
+### Memo
+
+```go
+// spans caches a span name derived once per call site.
+var spans runtimex.Memo[string]
+
+func handle() {
+	name := spans.Get(0, func(f runtimex.Frame) string {
+		return f.Short() // computed once for this call site
+	})
+	_ = name
+}
 ```
 
 ### Recover
