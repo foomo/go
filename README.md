@@ -17,7 +17,7 @@ Go standard library extension, adding the missing parts used in the foomo ecosys
 - **net** — Free port allocation and TCP connection wait helpers (`FreePort`, `FreePorts`, `WaitFor`, `WaitForFreePort`)
 - **options** — Generic functional options pattern (`Option`, `OptionE`, `Builder`, `BuilderE`)
 - **os** — Typed `Getenv`/`MustGetenv` for scalars, slices, and maps with defaults; path `Expand` (`~/`, env vars)
-- **runtime** — Enriched caller introspection (`Caller`, `CallerFunc`, `StackTrace`) and panic recovery
+- **runtime** — Enriched caller introspection (`Caller`, `CallerFunc`, `CallFrame`, `StackTrace`), per-call-site memoisation (`Frame`, `Memo`), and panic recovery
 - **sec** — Safe path joining to prevent directory traversal (gosec G304)
 - **slices** — Generic slice utilities: `Filter`, `Map`, `GroupBy` (with error variants)
 - **slog** — Test-friendly `slog.Handler` that writes to `testing.TB` output
