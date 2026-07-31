@@ -32,7 +32,7 @@ endif
 
 .PHONY: check
 ## Run lint & tests
-check: tidy generate lint.fix test audit
+check: tidy generate lint.fix test.race audit
 
 .PHONY: lint
 ## Run linter
@@ -56,17 +56,19 @@ generate:
 ## Run tests
 test:
 	@echo "〉go test"
-	@GO_TEST_TAGS=-skip go test -tags=safe -shuffle=on -coverprofile=coverage.out ./...
+	@GO_TEST_TAGS=-skip go test -v -tags=safe -shuffle=on -coverprofile=coverage.out ./...
 
 .PHONY: test.race
 ## Run tests with -race
 test.race:
-	@GO_TEST_TAGS=-skip go test -tags=safe -shuffle=on -coverprofile=coverage.out -race ./...
+	@echo "〉go test -race"
+	@GO_TEST_TAGS=-skip go test -v -tags=safe -shuffle=on -coverprofile=coverage.out -race ./...
 
 .PHONY: test.update
 ## Run tests with -update
 test.update:
-	@GO_TEST_TAGS=-skip go test -tags=safe -shuffle=on -coverprofile=coverage.out -update ./...
+	@echo "〉go test -update"
+	@GO_TEST_TAGS=-skip go test -v -tags=safe -shuffle=on -coverprofile=coverage.out -update ./...
 
 .PHONY: test.bench
 ## Run tests with -bench
@@ -94,13 +96,13 @@ tidy:
 ## Show outdated direct dependencies
 outdated:
 	@echo "〉go mod outdated"
-	@go list -u -m -json all | go-mod-outdated -update -direct
+	@go-mod-upgrade --list
 
 .PHONY: upgrade
 ## Show outdated direct dependencies
 upgrade:
 	@echo "〉go mod upgrade"
-	@go list -u -m -f '{{if and (not .Indirect) .Update}}{{.Path}}{{end}}' all | xargs -n1 -I{} go get {}@latest
+	@go-mod-upgrade
 	@$(MAKE) tidy
 
 ### Documentation
