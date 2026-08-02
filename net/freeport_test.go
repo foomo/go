@@ -5,7 +5,7 @@ import (
 	stdnet "net"
 	"testing"
 
-	netx "github.com/foomo/go/net"
+	gonet "github.com/foomo/go/net"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -13,7 +13,7 @@ import (
 func TestFreePort(t *testing.T) {
 	t.Parallel()
 
-	port, err := netx.FreePort(t.Context())
+	port, err := gonet.FreePort(t.Context())
 	require.NoError(t, err)
 	assert.Positive(t, port)
 }
@@ -25,7 +25,7 @@ func TestFreePort_CanceledContext(t *testing.T) {
 	ctx, cancel := context.WithCancel(t.Context())
 	cancel()
 
-	port, err := netx.FreePort(ctx)
+	port, err := gonet.FreePort(ctx)
 	require.Error(t, err)
 	assert.Zero(t, port)
 }
@@ -33,7 +33,7 @@ func TestFreePort_CanceledContext(t *testing.T) {
 func TestFreePorts(t *testing.T) {
 	t.Parallel()
 
-	ports, err := netx.FreePorts(t.Context(), 3)
+	ports, err := gonet.FreePorts(t.Context(), 3)
 	require.NoError(t, err)
 	require.Len(t, ports, 3)
 
@@ -50,7 +50,7 @@ func TestFreePorts(t *testing.T) {
 func TestFreePorts_Zero(t *testing.T) {
 	t.Parallel()
 
-	ports, err := netx.FreePorts(t.Context(), 0)
+	ports, err := gonet.FreePorts(t.Context(), 0)
 	require.NoError(t, err)
 	assert.Nil(t, ports)
 }
@@ -58,7 +58,7 @@ func TestFreePorts_Zero(t *testing.T) {
 func TestFreePorts_Negative(t *testing.T) {
 	t.Parallel()
 
-	ports, err := netx.FreePorts(t.Context(), -1)
+	ports, err := gonet.FreePorts(t.Context(), -1)
 	require.NoError(t, err)
 	assert.Nil(t, ports)
 }
@@ -70,7 +70,7 @@ func TestFreePorts_CanceledContext(t *testing.T) {
 	ctx, cancel := context.WithCancel(t.Context())
 	cancel()
 
-	ports, err := netx.FreePorts(ctx, 3)
+	ports, err := gonet.FreePorts(ctx, 3)
 	require.Error(t, err)
 	assert.Nil(t, ports)
 }
@@ -78,10 +78,10 @@ func TestFreePorts_CanceledContext(t *testing.T) {
 func TestIsFreePort(t *testing.T) {
 	t.Parallel()
 
-	port, err := netx.FreePort(t.Context())
+	port, err := gonet.FreePort(t.Context())
 	require.NoError(t, err)
 
-	require.NoError(t, netx.IsFreePort(t.Context(), port))
+	require.NoError(t, gonet.IsFreePort(t.Context(), port))
 }
 
 func TestIsFreePort_InUse(t *testing.T) {
@@ -93,18 +93,18 @@ func TestIsFreePort_InUse(t *testing.T) {
 
 	addr, ok := l.Addr().(*stdnet.TCPAddr)
 	require.True(t, ok)
-	require.Error(t, netx.IsFreePort(t.Context(), addr.Port))
+	require.Error(t, gonet.IsFreePort(t.Context(), addr.Port))
 }
 
 func TestIsFreePort_CanceledContext(t *testing.T) {
 	t.Skip("underlying Listen() does not support cancellation")
 	t.Parallel()
 
-	port, err := netx.FreePort(t.Context())
+	port, err := gonet.FreePort(t.Context())
 	require.NoError(t, err)
 
 	ctx, cancel := context.WithCancel(t.Context())
 	cancel()
 
-	require.Error(t, netx.IsFreePort(ctx, port))
+	require.Error(t, gonet.IsFreePort(ctx, port))
 }

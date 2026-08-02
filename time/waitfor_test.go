@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	timex "github.com/foomo/go/time"
+	gotime "github.com/foomo/go/time"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -17,7 +17,7 @@ func TestWaitFor(t *testing.T) {
 	t.Run("success on first poll", func(t *testing.T) {
 		t.Parallel()
 
-		require.NoError(t, timex.WaitFor(t.Context(), func(context.Context) (bool, error) {
+		require.NoError(t, gotime.WaitFor(t.Context(), func(context.Context) (bool, error) {
 			return true, nil
 		}, time.Second, 10*time.Millisecond))
 	})
@@ -26,7 +26,7 @@ func TestWaitFor(t *testing.T) {
 		t.Parallel()
 
 		errBoom := errors.New("boom")
-		err := timex.WaitFor(t.Context(), func(context.Context) (bool, error) {
+		err := gotime.WaitFor(t.Context(), func(context.Context) (bool, error) {
 			return true, errBoom
 		}, time.Second, 10*time.Millisecond)
 		require.ErrorIs(t, err, errBoom)
@@ -37,7 +37,7 @@ func TestWaitFor(t *testing.T) {
 
 		calls := 0
 
-		require.NoError(t, timex.WaitFor(t.Context(), func(context.Context) (bool, error) {
+		require.NoError(t, gotime.WaitFor(t.Context(), func(context.Context) (bool, error) {
 			calls++
 			return calls >= 3, nil
 		}, time.Second, 5*time.Millisecond))
@@ -47,7 +47,7 @@ func TestWaitFor(t *testing.T) {
 	t.Run("timeout", func(t *testing.T) {
 		t.Parallel()
 
-		err := timex.WaitFor(t.Context(), func(context.Context) (bool, error) {
+		err := gotime.WaitFor(t.Context(), func(context.Context) (bool, error) {
 			return false, nil
 		}, 100*time.Millisecond, 10*time.Millisecond)
 		require.ErrorIs(t, err, context.DeadlineExceeded)
@@ -59,7 +59,7 @@ func TestWaitFor(t *testing.T) {
 		ctx, cancel := context.WithCancel(t.Context())
 		cancel()
 
-		err := timex.WaitFor(ctx, func(context.Context) (bool, error) {
+		err := gotime.WaitFor(ctx, func(context.Context) (bool, error) {
 			return false, nil
 		}, time.Second, 10*time.Millisecond)
 		require.ErrorIs(t, err, context.Canceled)

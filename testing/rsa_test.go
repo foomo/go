@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	testingx "github.com/foomo/go/testing"
+	gotesting "github.com/foomo/go/testing"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -14,7 +14,7 @@ import (
 func TestGenerateRSAKeyPair(t *testing.T) {
 	t.Parallel()
 
-	publicPath, privatePath := testingx.GenerateRSAKeyPair(t)
+	publicPath, privatePath := gotesting.GenerateRSAKeyPair(t)
 
 	// verify files exist
 	require.FileExists(t, publicPath)

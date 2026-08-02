@@ -6,12 +6,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	fmtx "github.com/foomo/go/fmt"
+	gofmt "github.com/foomo/go/fmt"
 )
 
 func ExampleTprintf() {
 	format := "%{.name} is %{.age} years old"
-	fmt.Println(fmtx.Tprintf(format, "name", "John", "age", "30"))
+	fmt.Println(gofmt.Tprintf(format, "name", "John", "age", "30"))
 
 	// Output: John is 30 years old
 }
@@ -94,7 +94,7 @@ func TestTprintf(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			assert.Equal(t, tt.want, fmtx.Tprintf(tt.format, tt.pairs...))
+			assert.Equal(t, tt.want, gofmt.Tprintf(tt.format, tt.pairs...))
 		})
 	}
 }

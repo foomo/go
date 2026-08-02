@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	testingx "github.com/foomo/go/testing"
+	gotesting "github.com/foomo/go/testing"
 	"github.com/stretchr/testify/require"
 )
 
@@ -20,20 +20,20 @@ func TestWaitFor(t *testing.T) {
 		ready.Store(true)
 	}()
 
-	testingx.WaitFor(t, time.Second, ready.Load)
+	gotesting.WaitFor(t, time.Second, ready.Load)
 	require.True(t, ready.Load())
 }
 
 func TestWaitFor_Timeout(t *testing.T) {
 	t.Parallel()
 
-	tb := testingx.NewExampleTB()
-	testingx.WaitFor(tb, 50*time.Millisecond, func() bool { return false })
+	tb := gotesting.NewExampleTB()
+	gotesting.WaitFor(tb, 50*time.Millisecond, func() bool { return false })
 	require.True(t, tb.Failed())
 }
 
 func ExampleWaitFor() {
-	tb := testingx.NewExampleTB()
+	tb := gotesting.NewExampleTB()
 
 	var ready atomic.Bool
 
@@ -42,7 +42,7 @@ func ExampleWaitFor() {
 		ready.Store(true)
 	}()
 
-	testingx.WaitFor(tb, time.Second, ready.Load)
+	gotesting.WaitFor(tb, time.Second, ready.Load)
 	fmt.Println("ready:", ready.Load())
 	// Output: ready: true
 }

@@ -3,7 +3,7 @@ package testing_test
 import (
 	"testing"
 
-	testingx "github.com/foomo/go/testing"
+	gotesting "github.com/foomo/go/testing"
 )
 
 func helper(tb testing.TB) {
@@ -15,7 +15,7 @@ func helper(tb testing.TB) {
 }
 
 func ExampleNewExampleTB() {
-	tb := testingx.NewExampleTB()
+	tb := gotesting.NewExampleTB()
 	helper(tb)
 
 	// Output:

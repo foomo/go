@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	timex "github.com/foomo/go/time"
+	gotime "github.com/foomo/go/time"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -16,26 +16,26 @@ import (
 func restore(t *testing.T) {
 	t.Helper()
 
-	now := timex.Now
-	static := timex.NowStaticNSec
-	incremental := timex.NowIncrementalNSec
+	now := gotime.Now
+	static := gotime.NowStaticNSec
+	incremental := gotime.NowIncrementalNSec
 
 	t.Cleanup(func() {
-		timex.Now = now
-		timex.NowStaticNSec = static
-		timex.NowIncrementalNSec = incremental
+		gotime.Now = now
+		gotime.NowStaticNSec = static
+		gotime.NowIncrementalNSec = incremental
 	})
 }
 
 func TestStatic(t *testing.T) {
 	restore(t)
 
-	timex.Static()
+	gotime.Static()
 
-	want := time.Unix(0, timex.NowStaticNSec)
+	want := time.Unix(0, gotime.NowStaticNSec)
 
-	first := timex.Now()
-	second := timex.Now()
+	first := gotime.Now()
+	second := gotime.Now()
 
 	assert.Equal(t, want, first)
 	// Every call returns the very same instant.
@@ -45,12 +45,12 @@ func TestStatic(t *testing.T) {
 func TestIncremental(t *testing.T) {
 	restore(t)
 
-	timex.Incremental()
+	gotime.Incremental()
 
-	first := timex.Now()
-	require.Equal(t, time.Unix(0, timex.NowStaticNSec), first)
+	first := gotime.Now()
+	require.Equal(t, time.Unix(0, gotime.NowStaticNSec), first)
 
-	second := timex.Now()
+	second := gotime.Now()
 	// Strictly increasing by one nanosecond per call.
 	assert.Equal(t, first.Add(time.Nanosecond), second)
 	assert.True(t, second.After(first))
@@ -59,30 +59,30 @@ func TestIncremental(t *testing.T) {
 func TestResetIncremental(t *testing.T) {
 	restore(t)
 
-	timex.Incremental()
-	timex.Now()
-	timex.Now()
-	require.Greater(t, timex.NowIncrementalNSec, timex.NowStaticNSec)
+	gotime.Incremental()
+	gotime.Now()
+	gotime.Now()
+	require.Greater(t, gotime.NowIncrementalNSec, gotime.NowStaticNSec)
 
-	timex.ResetIncremental()
-	assert.Equal(t, timex.NowStaticNSec, timex.NowIncrementalNSec)
+	gotime.ResetIncremental()
+	assert.Equal(t, gotime.NowStaticNSec, gotime.NowIncrementalNSec)
 }
 
 func TestNowDefault(t *testing.T) {
 	restore(t)
 
 	// The default provider is a live clock.
-	assert.WithinDuration(t, time.Now(), timex.Now(), time.Minute)
+	assert.WithinDuration(t, time.Now(), gotime.Now(), time.Minute)
 }
 
 func ExampleStatic() {
 	// Save and restore the default clock so the example is self-contained.
-	defer func() { timex.Now = time.Now }()
+	defer func() { gotime.Now = time.Now }()
 
-	timex.Static()
+	gotime.Static()
 
-	fmt.Println(timex.Now().UTC().Format(time.RFC3339))
-	fmt.Println(timex.Now().UTC().Format(time.RFC3339))
+	fmt.Println(gotime.Now().UTC().Format(time.RFC3339))
+	fmt.Println(gotime.Now().UTC().Format(time.RFC3339))
 
 	// Output:
 	// 2021-01-01T11:00:00Z

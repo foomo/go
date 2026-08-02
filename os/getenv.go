@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	slicesx "github.com/foomo/go/slices"
+	goslices "github.com/foomo/go/slices"
 )
 
 var (
@@ -424,7 +424,7 @@ func getenvSlice[T any](key string, def []T, parse func(string) (T, error)) ([]T
 
 	parts := strings.Split(str, SliceSeparator)
 
-	return slicesx.MapE(parts, func(p string) (T, error) {
+	return goslices.MapE(parts, func(p string) (T, error) {
 		return parse(strings.TrimSpace(p))
 	})
 }

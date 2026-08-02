@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"strings"
 
-	stringsx "github.com/foomo/go/strings"
+	gostrings "github.com/foomo/go/strings"
 )
 
 func ExampleCompose() {
-	result := stringsx.Compose("HELLO", strings.ToLower, stringsx.FirstToUpper)
+	result := gostrings.Compose("HELLO", strings.ToLower, gostrings.FirstToUpper)
 	fmt.Println(result)
 	// Output: Hello
 }

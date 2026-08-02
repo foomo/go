@@ -9,12 +9,12 @@ import (
 	"strconv"
 	"testing"
 
-	pkgerrors "github.com/foomo/go/errors"
+	goerrors "github.com/foomo/go/errors"
 )
 
 func ExampleAsAnyType() {
 	_, err := os.Open("/nonexistent/path/for/example")
-	fmt.Println(pkgerrors.AsAnyType(err, &fs.PathError{}, &strconv.NumError{}))
+	fmt.Println(goerrors.AsAnyType(err, &fs.PathError{}, &strconv.NumError{}))
 
 	// Output: true
 }
@@ -97,7 +97,7 @@ func TestAsAnyType(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := pkgerrors.AsAnyType(tt.err, tt.targets...); got != tt.want {
+			if got := goerrors.AsAnyType(tt.err, tt.targets...); got != tt.want {
 				t.Errorf("AsAnyType() = %v, want %v", got, tt.want)
 			}
 		})

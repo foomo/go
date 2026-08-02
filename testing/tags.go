@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	osx "github.com/foomo/go/os"
+	goos "github.com/foomo/go/os"
 	tagx "github.com/foomo/go/testing/tag"
 )
 
@@ -51,7 +51,7 @@ func SkipTags(tags ...tagx.Tag) bool {
 		return true
 	}
 
-	envTags := osx.GetenvStringSlice(EnvTestTags, nil)
+	envTags := goos.GetenvStringSlice(EnvTestTags, nil)
 	// always return false if there are non tags defined
 	if envTags == nil {
 		return false

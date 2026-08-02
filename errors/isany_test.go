@@ -7,12 +7,12 @@ import (
 	"io"
 	"testing"
 
-	pkgerrors "github.com/foomo/go/errors"
+	goerrors "github.com/foomo/go/errors"
 )
 
 func ExampleIsAny() {
 	err := fmt.Errorf("wrapped: %w", io.EOF)
-	fmt.Println(pkgerrors.IsAny(err, context.Canceled, io.EOF))
+	fmt.Println(goerrors.IsAny(err, context.Canceled, io.EOF))
 	// Output: true
 }
 
@@ -77,7 +77,7 @@ func TestIsAny(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := pkgerrors.IsAny(tt.err, tt.targets...); got != tt.want {
+			if got := goerrors.IsAny(tt.err, tt.targets...); got != tt.want {
 				t.Errorf("IsAny() = %v, want %v", got, tt.want)
 			}
 		})
