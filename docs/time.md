@@ -1,11 +1,85 @@
 # time
 
-Context-aware time utilities and duration parsing.
+Context-aware time utilities, duration parsing, and a controllable clock.
 
 ## Import
 
 ```go
 import timex "github.com/foomo/go/time"
+```
+
+## Time control
+
+`Now` is a package-level variable (defaulting to `time.Now`) that acts as the application's
+clock. Call `timex.Now()` instead of the standard library `time.Now()` throughout your code,
+then swap the provider to control time — for time travel or deterministic unit test outputs.
+
+### Now
+
+```go
+var Now = time.Now
+```
+
+The current-time provider. Invoke `timex.Now()` wherever you would call `time.Now()`.
+Reassign it (directly, or via `Static`/`Incremental`) to take control of the clock.
+
+### Static
+
+```go
+func Static()
+```
+
+Points `Now` at a static provider: every call returns the same instant,
+`time.Unix(0, NowStaticNSec)` (default `2021-01-01 12:00:00`). Ideal for fixed, reproducible
+timestamps in tests and golden files.
+
+### Incremental
+
+```go
+func Incremental()
+```
+
+Points `Now` at an incremental provider: each call returns a strictly increasing instant,
+starting at `time.Unix(0, NowIncrementalNSec)` and advancing one nanosecond per call. Useful
+when you need distinct but deterministic timestamps (e.g. stable ordering).
+
+### ResetIncremental
+
+```go
+func ResetIncremental()
+```
+
+Rewinds the incremental provider's cursor (`NowIncrementalNSec`) back to `NowStaticNSec`.
+
+### Tunables
+
+```go
+var NowStaticNSec      = int64(1609498800e9) // 2021-01-01 12:00:00 (11:00:00 UTC), in Unix nanoseconds
+var NowIncrementalNSec = NowStaticNSec       // current incremental cursor
+```
+
+Adjust `NowStaticNSec` to change the fixed instant used by `Static` (it also seeds the
+incremental cursor). `NowIncrementalNSec` holds the incremental provider's current position.
+
+## Example
+
+```go
+// In production code, always read the clock through timex.Now.
+func stamp() time.Time { return timex.Now() }
+
+// In a test, freeze time for deterministic output.
+timex.Static()
+fmt.Println(stamp().UTC().Format(time.RFC3339)) // 2021-01-01T11:00:00Z
+fmt.Println(stamp().UTC().Format(time.RFC3339)) // 2021-01-01T11:00:00Z (unchanged)
+
+// Or advance deterministically, one nanosecond per call.
+timex.Incremental()
+a := stamp()
+b := stamp()
+fmt.Println(b.After(a)) // true
+
+// Restore the default clock when done.
+timex.Now = time.Now
 ```
 
 ## API
