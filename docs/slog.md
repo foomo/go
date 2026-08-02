@@ -5,7 +5,7 @@ Test-friendly `slog.Handler` that writes log output through `testing.TB`.
 ## Import
 
 ```go
-import slogx "github.com/foomo/go/slog"
+import goslog "github.com/foomo/go/slog"
 ```
 
 ## API
@@ -36,7 +36,7 @@ Sets the minimum log level for the test handler.
 
 ```go
 func TestService(t *testing.T) {
-	logger := slog.New(slogx.NewTestHandler(t))
+	logger := slog.New(goslog.NewTestHandler(t))
 	logger.Info("starting", "port", 8080)
 	// Output via t.Log: testfile_test.go:4: [INFO] starting port=8080
 }
@@ -46,7 +46,7 @@ func TestService(t *testing.T) {
 
 ```go
 func TestServiceWarn(t *testing.T) {
-	logger := slog.New(slogx.NewTestHandler(t, slogx.TestHandlerWithLevel(slog.LevelWarn)))
+	logger := slog.New(goslog.NewTestHandler(t, goslog.TestHandlerWithLevel(slog.LevelWarn)))
 	logger.Debug("ignored") // not printed
 	logger.Warn("something happened", "err", "timeout")
 }

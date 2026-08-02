@@ -5,7 +5,7 @@ Runtime introspection utilities.
 ## Import
 
 ```go
-import runtimex "github.com/foomo/go/runtime"
+import goruntime "github.com/foomo/go/runtime"
 ```
 
 ## API
@@ -102,7 +102,7 @@ Represents a recovered panic with captured runtime context. `Unwrap` returns the
 ### Caller
 
 ```go
-short, full, file, line, ok := runtimex.Caller(0)
+short, full, file, line, ok := goruntime.Caller(0)
 fmt.Printf("%s (%s) at %s:%d\n", short, full, file, line)
 // e.g. main.main (main.main) at main/main.go:12
 ```
@@ -110,14 +110,14 @@ fmt.Printf("%s (%s) at %s:%d\n", short, full, file, line)
 ### CallerFunc
 
 ```go
-name, ok := runtimex.CallerFunc(0)
+name, ok := goruntime.CallerFunc(0)
 fmt.Println(name) // e.g. "main"
 ```
 
 ### CallFrame
 
 ```go
-f := runtimex.CallFrame(0)
+f := goruntime.CallFrame(0)
 fmt.Println(f.Name())  // e.g. "main.main"
 fmt.Println(f.Short()) // e.g. "main"
 ```
@@ -126,10 +126,10 @@ fmt.Println(f.Short()) // e.g. "main"
 
 ```go
 // spans caches a span name derived once per call site.
-var spans runtimex.Memo[string]
+var spans goruntime.Memo[string]
 
 func handle() {
-	name := spans.Get(0, func(f runtimex.Frame) string {
+	name := spans.Get(0, func(f goruntime.Frame) string {
 		return f.Short() // computed once for this call site
 	})
 	_ = name
@@ -139,11 +139,11 @@ func handle() {
 ### Recover
 
 ```go
-err := runtimex.Recover(func() {
+err := goruntime.Recover(func() {
 	panic("something went wrong")
 })
 
-var pe *runtimex.PanicError
+var pe *goruntime.PanicError
 if errors.As(err, &pe) {
 	fmt.Println(pe.Value) // "something went wrong"
 	fmt.Println(pe.Stack) // full stack trace
@@ -153,7 +153,7 @@ if errors.As(err, &pe) {
 ### StackTrace
 
 ```go
-trace := runtimex.StackTrace(5, 0)
+trace := goruntime.StackTrace(5, 0)
 fmt.Println(trace)
 // main.handler
 //   server/handler.go:28

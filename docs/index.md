@@ -17,7 +17,7 @@ hero:
 
 features:
   - title: Stdlib Mirror Naming
-    details: Packages mirror Go standard library naming with an x suffix alias convention — netx, osx, fmtx — so imports stay intuitive.
+    details: Packages mirror Go standard library naming with a go prefix alias convention — gonet, goos, gofmt — so imports stay intuitive.
   - title: Generic Utilities
     details: Type-safe generic functions for slices (Filter, Map, GroupBy) and the functional options pattern (Option, OptionE).
   - title: Testing Helpers

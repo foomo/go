@@ -5,7 +5,7 @@ Security utilities.
 ## Import
 
 ```go
-import secx "github.com/foomo/go/sec"
+import gosec "github.com/foomo/go/sec"
 ```
 
 ## API
@@ -24,14 +24,14 @@ This is the recommended way to construct file paths from user-supplied input, ad
 
 ```go
 // Safe path — stays within root
-path, err := secx.Filename("/srv/data", "users", "profile.json")
+path, err := gosec.Filename("/srv/data", "users", "profile.json")
 // path = "/srv/data/users/profile.json", err = nil
 
 // Traversal attempt — blocked
-path, err = secx.Filename("/srv/data", "../etc/passwd")
+path, err = gosec.Filename("/srv/data", "../etc/passwd")
 // path = "", err = "path traversal attempt"
 
 // Empty root — rejected
-path, err = secx.Filename("", "file.txt")
+path, err = gosec.Filename("", "file.txt")
 // path = "", err = "root required"
 ```

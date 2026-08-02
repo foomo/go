@@ -5,7 +5,7 @@ Typed environment variable parsing with defaults, plus path expansion helpers.
 ## Import
 
 ```go
-import osx "github.com/foomo/go/os"
+import goos "github.com/foomo/go/os"
 ```
 
 ## Package Variables
@@ -130,7 +130,7 @@ func Expand(s string) (string, error)
 Expands a leading `~/` to the user's home directory and resolves environment variable references via `os.ExpandEnv`. Returns an error if the home directory cannot be determined.
 
 ```go
-path, err := osx.Expand("~/.config/$APP_NAME/config.yaml")
+path, err := goos.Expand("~/.config/$APP_NAME/config.yaml")
 if err != nil {
 	log.Fatal(err)
 }
@@ -148,31 +148,31 @@ import (
 	"fmt"
 	"os"
 
-	osx "github.com/foomo/go/os"
+	goos "github.com/foomo/go/os"
 )
 
 func main() {
 	// String with default
-	host := osx.Getenv("APP_HOST", "localhost")
+	host := goos.Getenv("APP_HOST", "localhost")
 	fmt.Println(host)
 
 	// Check existence
-	if osx.HasEnv("DATABASE_URL") {
+	if goos.HasEnv("DATABASE_URL") {
 		fmt.Println("database configured")
 	}
 
 	// Typed parsing
 	os.Setenv("DEBUG", "true")
-	debug, _ := osx.GetenvBool("DEBUG", false)
+	debug, _ := goos.GetenvBool("DEBUG", false)
 	fmt.Println(debug) // true
 
 	os.Setenv("PORT", "8080")
-	port, _ := osx.GetenvInt32("PORT", 3000)
+	port, _ := goos.GetenvInt32("PORT", 3000)
 	fmt.Println(port) // 8080
 
 	// Duration
 	os.Setenv("TIMEOUT", "30s")
-	timeout, _ := osx.GetenvDuration("TIMEOUT", 10*time.Second)
+	timeout, _ := goos.GetenvDuration("TIMEOUT", 10*time.Second)
 	fmt.Println(timeout) // 30s
 }
 ```
@@ -181,28 +181,28 @@ func main() {
 
 ```go
 // Panics if DATABASE_URL is not set
-dsn := osx.MustGetenv("DATABASE_URL")
+dsn := goos.MustGetenv("DATABASE_URL")
 
 // Panics if PORT is not set or not a valid int
-port := osx.MustGetenvInt("PORT")
+port := goos.MustGetenvInt("PORT")
 ```
 
 ### Slices and maps
 
 ```go
 os.Setenv("ALLOWED_ORIGINS", "foo.com, bar.com, baz.com")
-origins := osx.GetenvStringSlice("ALLOWED_ORIGINS", nil)
+origins := goos.GetenvStringSlice("ALLOWED_ORIGINS", nil)
 // origins = ["foo.com", "bar.com", "baz.com"]
 
 os.Setenv("PORTS", "8080,8081,8082")
-ports, _ := osx.GetenvIntSlice("PORTS", nil)
+ports, _ := goos.GetenvIntSlice("PORTS", nil)
 // ports = [8080, 8081, 8082]
 
 os.Setenv("LABELS", "env:prod, region:eu")
-labels, _ := osx.GetenvStringMap("LABELS", nil)
+labels, _ := goos.GetenvStringMap("LABELS", nil)
 // labels = map["env":"prod", "region":"eu"]
 
 os.Setenv("TIMEOUTS", "read:5s,write:10s")
-timeouts, _ := osx.GetenvDurationMap("TIMEOUTS", nil)
+timeouts, _ := goos.GetenvDurationMap("TIMEOUTS", nil)
 // timeouts = map["read":5s, "write":10s]
 ```
