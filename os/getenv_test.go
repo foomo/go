@@ -6,7 +6,7 @@ import (
 	"sort"
 	"time"
 
-	osx "github.com/foomo/go/os"
+	goos "github.com/foomo/go/os"
 )
 
 // ---------------------------------- helpers ----------------------------------
@@ -14,11 +14,11 @@ import (
 func ExampleHasEnv() {
 	_ = os.Unsetenv("FOO")
 
-	fmt.Println(osx.HasEnv("FOO"))
+	fmt.Println(goos.HasEnv("FOO"))
 
 	_ = os.Setenv("FOO", "bar")
 
-	fmt.Println(osx.HasEnv("FOO"))
+	fmt.Println(goos.HasEnv("FOO"))
 
 	// Output:
 	// false
@@ -28,7 +28,7 @@ func ExampleHasEnv() {
 func ExampleMustHasEnv() {
 	_ = os.Setenv("FOO", "bar")
 
-	osx.MustHasEnv("FOO") // does not panic
+	goos.MustHasEnv("FOO") // does not panic
 	fmt.Println("ok")
 
 	// Output:
@@ -40,11 +40,11 @@ func ExampleMustHasEnv() {
 func ExampleGetenv() {
 	_ = os.Setenv("FOO", "")
 
-	fmt.Println(osx.Getenv("FOO", "fallback"))
+	fmt.Println(goos.Getenv("FOO", "fallback"))
 
 	_ = os.Setenv("FOO", "bar")
 
-	fmt.Println(osx.Getenv("FOO", "fallback"))
+	fmt.Println(goos.Getenv("FOO", "fallback"))
 
 	// Output:
 	// fallback
@@ -53,11 +53,11 @@ func ExampleGetenv() {
 
 func ExampleGetenvBool() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvBool("FOO", false)
+	v, _ := goos.GetenvBool("FOO", false)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "true")
-	v, _ = osx.GetenvBool("FOO", false)
+	v, _ = goos.GetenvBool("FOO", false)
 	fmt.Println(v)
 
 	// Output:
@@ -67,11 +67,11 @@ func ExampleGetenvBool() {
 
 func ExampleGetenvInt() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvInt("FOO", 1)
+	v, _ := goos.GetenvInt("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "42")
-	v, _ = osx.GetenvInt("FOO", 1)
+	v, _ = goos.GetenvInt("FOO", 1)
 	fmt.Println(v)
 
 	// Output:
@@ -81,15 +81,15 @@ func ExampleGetenvInt() {
 
 func ExampleGetenvInt8() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvInt8("FOO", 1)
+	v, _ := goos.GetenvInt8("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "127")
-	v, _ = osx.GetenvInt8("FOO", 1)
+	v, _ = goos.GetenvInt8("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "128")
-	_, err := osx.GetenvInt8("FOO", 0)
+	_, err := goos.GetenvInt8("FOO", 0)
 	fmt.Println(err != nil)
 
 	// Output:
@@ -100,11 +100,11 @@ func ExampleGetenvInt8() {
 
 func ExampleGetenvInt16() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvInt16("FOO", 1)
+	v, _ := goos.GetenvInt16("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "1000")
-	v, _ = osx.GetenvInt16("FOO", 1)
+	v, _ = goos.GetenvInt16("FOO", 1)
 	fmt.Println(v)
 
 	// Output:
@@ -114,19 +114,19 @@ func ExampleGetenvInt16() {
 
 func ExampleGetenvInt32() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvInt32("FOO", 1)
+	v, _ := goos.GetenvInt32("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "2")
-	v, _ = osx.GetenvInt32("FOO", 1)
+	v, _ = goos.GetenvInt32("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "0x1F")
-	v, _ = osx.GetenvInt32("FOO", 0)
+	v, _ = goos.GetenvInt32("FOO", 0)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "2147483648")
-	_, err := osx.GetenvInt32("FOO", 0)
+	_, err := goos.GetenvInt32("FOO", 0)
 	fmt.Println(err != nil)
 
 	// Output:
@@ -138,11 +138,11 @@ func ExampleGetenvInt32() {
 
 func ExampleGetenvInt64() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvInt64("FOO", 1)
+	v, _ := goos.GetenvInt64("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "2")
-	v, _ = osx.GetenvInt64("FOO", 1)
+	v, _ = goos.GetenvInt64("FOO", 1)
 	fmt.Println(v)
 
 	// Output:
@@ -152,11 +152,11 @@ func ExampleGetenvInt64() {
 
 func ExampleGetenvUint() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvUint("FOO", 1)
+	v, _ := goos.GetenvUint("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "42")
-	v, _ = osx.GetenvUint("FOO", 1)
+	v, _ = goos.GetenvUint("FOO", 1)
 	fmt.Println(v)
 
 	// Output:
@@ -166,15 +166,15 @@ func ExampleGetenvUint() {
 
 func ExampleGetenvUint8() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvUint8("FOO", 1)
+	v, _ := goos.GetenvUint8("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "255")
-	v, _ = osx.GetenvUint8("FOO", 1)
+	v, _ = goos.GetenvUint8("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "256")
-	_, err := osx.GetenvUint8("FOO", 0)
+	_, err := goos.GetenvUint8("FOO", 0)
 	fmt.Println(err != nil)
 
 	// Output:
@@ -185,11 +185,11 @@ func ExampleGetenvUint8() {
 
 func ExampleGetenvUint16() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvUint16("FOO", 1)
+	v, _ := goos.GetenvUint16("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "65535")
-	v, _ = osx.GetenvUint16("FOO", 1)
+	v, _ = goos.GetenvUint16("FOO", 1)
 	fmt.Println(v)
 
 	// Output:
@@ -199,11 +199,11 @@ func ExampleGetenvUint16() {
 
 func ExampleGetenvUint32() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvUint32("FOO", 1)
+	v, _ := goos.GetenvUint32("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "100000")
-	v, _ = osx.GetenvUint32("FOO", 1)
+	v, _ = goos.GetenvUint32("FOO", 1)
 	fmt.Println(v)
 
 	// Output:
@@ -213,11 +213,11 @@ func ExampleGetenvUint32() {
 
 func ExampleGetenvUint64() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvUint64("FOO", 1)
+	v, _ := goos.GetenvUint64("FOO", 1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "18446744073709551615")
-	v, _ = osx.GetenvUint64("FOO", 1)
+	v, _ = goos.GetenvUint64("FOO", 1)
 	fmt.Println(v)
 
 	// Output:
@@ -227,15 +227,15 @@ func ExampleGetenvUint64() {
 
 func ExampleGetenvFloat32() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvFloat32("FOO", 0.5)
+	v, _ := goos.GetenvFloat32("FOO", 0.5)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "1.5")
-	v, _ = osx.GetenvFloat32("FOO", 0.5)
+	v, _ = goos.GetenvFloat32("FOO", 0.5)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "not-a-number")
-	_, err := osx.GetenvFloat32("FOO", 0)
+	_, err := goos.GetenvFloat32("FOO", 0)
 	fmt.Println(err != nil)
 
 	// Output:
@@ -246,11 +246,11 @@ func ExampleGetenvFloat32() {
 
 func ExampleGetenvFloat64() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvFloat64("FOO", 0.1)
+	v, _ := goos.GetenvFloat64("FOO", 0.1)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "0.2")
-	v, _ = osx.GetenvFloat64("FOO", 0.1)
+	v, _ = goos.GetenvFloat64("FOO", 0.1)
 	fmt.Println(v)
 
 	// Output:
@@ -260,15 +260,15 @@ func ExampleGetenvFloat64() {
 
 func ExampleGetenvDuration() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvDuration("FOO", 5*time.Second)
+	v, _ := goos.GetenvDuration("FOO", 5*time.Second)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "100ms")
-	v, _ = osx.GetenvDuration("FOO", 5*time.Second)
+	v, _ = goos.GetenvDuration("FOO", 5*time.Second)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "invalid")
-	_, err := osx.GetenvDuration("FOO", 0)
+	_, err := goos.GetenvDuration("FOO", 0)
 	fmt.Println(err != nil)
 
 	// Output:
@@ -282,7 +282,7 @@ func ExampleGetenvDuration() {
 func ExampleMustGetenv() {
 	_ = os.Setenv("FOO", "bar")
 
-	fmt.Println(osx.MustGetenv("FOO"))
+	fmt.Println(goos.MustGetenv("FOO"))
 
 	// Output:
 	// bar
@@ -291,7 +291,7 @@ func ExampleMustGetenv() {
 func ExampleMustGetenvBool() {
 	_ = os.Setenv("FOO", "true")
 
-	fmt.Println(osx.MustGetenvBool("FOO"))
+	fmt.Println(goos.MustGetenvBool("FOO"))
 
 	// Output:
 	// true
@@ -300,7 +300,7 @@ func ExampleMustGetenvBool() {
 func ExampleMustGetenvInt() {
 	_ = os.Setenv("FOO", "42")
 
-	fmt.Println(osx.MustGetenvInt("FOO"))
+	fmt.Println(goos.MustGetenvInt("FOO"))
 
 	// Output:
 	// 42
@@ -309,7 +309,7 @@ func ExampleMustGetenvInt() {
 func ExampleMustGetenvInt8() {
 	_ = os.Setenv("FOO", "127")
 
-	fmt.Println(osx.MustGetenvInt8("FOO"))
+	fmt.Println(goos.MustGetenvInt8("FOO"))
 
 	// Output:
 	// 127
@@ -318,7 +318,7 @@ func ExampleMustGetenvInt8() {
 func ExampleMustGetenvInt16() {
 	_ = os.Setenv("FOO", "1000")
 
-	fmt.Println(osx.MustGetenvInt16("FOO"))
+	fmt.Println(goos.MustGetenvInt16("FOO"))
 
 	// Output:
 	// 1000
@@ -327,7 +327,7 @@ func ExampleMustGetenvInt16() {
 func ExampleMustGetenvInt32() {
 	_ = os.Setenv("FOO", "100000")
 
-	fmt.Println(osx.MustGetenvInt32("FOO"))
+	fmt.Println(goos.MustGetenvInt32("FOO"))
 
 	// Output:
 	// 100000
@@ -336,7 +336,7 @@ func ExampleMustGetenvInt32() {
 func ExampleMustGetenvInt64() {
 	_ = os.Setenv("FOO", "100000")
 
-	fmt.Println(osx.MustGetenvInt64("FOO"))
+	fmt.Println(goos.MustGetenvInt64("FOO"))
 
 	// Output:
 	// 100000
@@ -345,7 +345,7 @@ func ExampleMustGetenvInt64() {
 func ExampleMustGetenvUint() {
 	_ = os.Setenv("FOO", "42")
 
-	fmt.Println(osx.MustGetenvUint("FOO"))
+	fmt.Println(goos.MustGetenvUint("FOO"))
 
 	// Output:
 	// 42
@@ -354,7 +354,7 @@ func ExampleMustGetenvUint() {
 func ExampleMustGetenvUint8() {
 	_ = os.Setenv("FOO", "255")
 
-	fmt.Println(osx.MustGetenvUint8("FOO"))
+	fmt.Println(goos.MustGetenvUint8("FOO"))
 
 	// Output:
 	// 255
@@ -363,7 +363,7 @@ func ExampleMustGetenvUint8() {
 func ExampleMustGetenvUint16() {
 	_ = os.Setenv("FOO", "65535")
 
-	fmt.Println(osx.MustGetenvUint16("FOO"))
+	fmt.Println(goos.MustGetenvUint16("FOO"))
 
 	// Output:
 	// 65535
@@ -372,7 +372,7 @@ func ExampleMustGetenvUint16() {
 func ExampleMustGetenvUint32() {
 	_ = os.Setenv("FOO", "100000")
 
-	fmt.Println(osx.MustGetenvUint32("FOO"))
+	fmt.Println(goos.MustGetenvUint32("FOO"))
 
 	// Output:
 	// 100000
@@ -381,7 +381,7 @@ func ExampleMustGetenvUint32() {
 func ExampleMustGetenvUint64() {
 	_ = os.Setenv("FOO", "18446744073709551615")
 
-	fmt.Println(osx.MustGetenvUint64("FOO"))
+	fmt.Println(goos.MustGetenvUint64("FOO"))
 
 	// Output:
 	// 18446744073709551615
@@ -390,7 +390,7 @@ func ExampleMustGetenvUint64() {
 func ExampleMustGetenvFloat32() {
 	_ = os.Setenv("FOO", "1.5")
 
-	fmt.Println(osx.MustGetenvFloat32("FOO"))
+	fmt.Println(goos.MustGetenvFloat32("FOO"))
 
 	// Output:
 	// 1.5
@@ -399,7 +399,7 @@ func ExampleMustGetenvFloat32() {
 func ExampleMustGetenvFloat64() {
 	_ = os.Setenv("FOO", "3.14")
 
-	fmt.Println(osx.MustGetenvFloat64("FOO"))
+	fmt.Println(goos.MustGetenvFloat64("FOO"))
 
 	// Output:
 	// 3.14
@@ -408,7 +408,7 @@ func ExampleMustGetenvFloat64() {
 func ExampleMustGetenvDuration() {
 	_ = os.Setenv("FOO", "5s")
 
-	fmt.Println(osx.MustGetenvDuration("FOO"))
+	fmt.Println(goos.MustGetenvDuration("FOO"))
 
 	// Output:
 	// 5s
@@ -419,15 +419,15 @@ func ExampleMustGetenvDuration() {
 func ExampleGetenvStringSlice() {
 	_ = os.Setenv("FOO", "")
 
-	fmt.Println(osx.GetenvStringSlice("FOO", nil))
+	fmt.Println(goos.GetenvStringSlice("FOO", nil))
 
 	_ = os.Setenv("FOO", "foo")
 
-	fmt.Println(osx.GetenvStringSlice("FOO", nil))
+	fmt.Println(goos.GetenvStringSlice("FOO", nil))
 
 	_ = os.Setenv("FOO", "foo,bar")
 
-	fmt.Println(osx.GetenvStringSlice("FOO", nil))
+	fmt.Println(goos.GetenvStringSlice("FOO", nil))
 
 	// Output:
 	// []
@@ -437,11 +437,11 @@ func ExampleGetenvStringSlice() {
 
 func ExampleGetenvBoolSlice() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvBoolSlice("FOO", nil)
+	v, _ := goos.GetenvBoolSlice("FOO", nil)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "true,false,true")
-	v, _ = osx.GetenvBoolSlice("FOO", nil)
+	v, _ = goos.GetenvBoolSlice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -451,11 +451,11 @@ func ExampleGetenvBoolSlice() {
 
 func ExampleGetenvIntSlice() {
 	_ = os.Setenv("FOO", "")
-	v, _ := osx.GetenvIntSlice("FOO", nil)
+	v, _ := goos.GetenvIntSlice("FOO", nil)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", "1, 2, 3")
-	v, _ = osx.GetenvIntSlice("FOO", nil)
+	v, _ = goos.GetenvIntSlice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -465,7 +465,7 @@ func ExampleGetenvIntSlice() {
 
 func ExampleGetenvInt8Slice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
-	v, _ := osx.GetenvInt8Slice("FOO", nil)
+	v, _ := goos.GetenvInt8Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -474,7 +474,7 @@ func ExampleGetenvInt8Slice() {
 
 func ExampleGetenvInt16Slice() {
 	_ = os.Setenv("FOO", "100, 200, 300")
-	v, _ := osx.GetenvInt16Slice("FOO", nil)
+	v, _ := goos.GetenvInt16Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -483,7 +483,7 @@ func ExampleGetenvInt16Slice() {
 
 func ExampleGetenvInt32Slice() {
 	_ = os.Setenv("FOO", "100, 200, 300")
-	v, _ := osx.GetenvInt32Slice("FOO", nil)
+	v, _ := goos.GetenvInt32Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -492,7 +492,7 @@ func ExampleGetenvInt32Slice() {
 
 func ExampleGetenvInt64Slice() {
 	_ = os.Setenv("FOO", "100, 200, 300")
-	v, _ := osx.GetenvInt64Slice("FOO", nil)
+	v, _ := goos.GetenvInt64Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -501,7 +501,7 @@ func ExampleGetenvInt64Slice() {
 
 func ExampleGetenvUintSlice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
-	v, _ := osx.GetenvUintSlice("FOO", nil)
+	v, _ := goos.GetenvUintSlice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -510,7 +510,7 @@ func ExampleGetenvUintSlice() {
 
 func ExampleGetenvUint8Slice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
-	v, _ := osx.GetenvUint8Slice("FOO", nil)
+	v, _ := goos.GetenvUint8Slice("FOO", nil)
 	fmt.Println(v) //nolint:staticcheck // QF1010
 
 	// Output:
@@ -519,7 +519,7 @@ func ExampleGetenvUint8Slice() {
 
 func ExampleGetenvUint16Slice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
-	v, _ := osx.GetenvUint16Slice("FOO", nil)
+	v, _ := goos.GetenvUint16Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -528,7 +528,7 @@ func ExampleGetenvUint16Slice() {
 
 func ExampleGetenvUint32Slice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
-	v, _ := osx.GetenvUint32Slice("FOO", nil)
+	v, _ := goos.GetenvUint32Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -537,7 +537,7 @@ func ExampleGetenvUint32Slice() {
 
 func ExampleGetenvUint64Slice() {
 	_ = os.Setenv("FOO", "1, 2, 3")
-	v, _ := osx.GetenvUint64Slice("FOO", nil)
+	v, _ := goos.GetenvUint64Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -546,7 +546,7 @@ func ExampleGetenvUint64Slice() {
 
 func ExampleGetenvFloat32Slice() {
 	_ = os.Setenv("FOO", "1.1, 2.2, 3.3")
-	v, _ := osx.GetenvFloat32Slice("FOO", nil)
+	v, _ := goos.GetenvFloat32Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -555,7 +555,7 @@ func ExampleGetenvFloat32Slice() {
 
 func ExampleGetenvFloat64Slice() {
 	_ = os.Setenv("FOO", "1.1, 2.2, 3.3")
-	v, _ := osx.GetenvFloat64Slice("FOO", nil)
+	v, _ := goos.GetenvFloat64Slice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -564,7 +564,7 @@ func ExampleGetenvFloat64Slice() {
 
 func ExampleGetenvDurationSlice() {
 	_ = os.Setenv("FOO", "1s, 500ms, 2m")
-	v, _ := osx.GetenvDurationSlice("FOO", nil)
+	v, _ := goos.GetenvDurationSlice("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -575,11 +575,11 @@ func ExampleGetenvDurationSlice() {
 
 func ExampleGetenvStringMap() {
 	_ = os.Setenv("FOO", "a:1")
-	v, _ := osx.GetenvStringMap("FOO", nil)
+	v, _ := goos.GetenvStringMap("FOO", nil)
 	fmt.Println(v)
 
 	_ = os.Setenv("FOO", " x : hello , y : world ")
-	v, _ = osx.GetenvStringMap("FOO", nil)
+	v, _ = goos.GetenvStringMap("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -593,7 +593,7 @@ func ExampleGetenvStringMap() {
 	}
 
 	_ = os.Setenv("FOO", "invalid")
-	_, err := osx.GetenvStringMap("FOO", nil)
+	_, err := goos.GetenvStringMap("FOO", nil)
 	fmt.Println(err != nil)
 
 	// Output:
@@ -605,7 +605,7 @@ func ExampleGetenvStringMap() {
 
 func ExampleGetenvStringMapString() {
 	_ = os.Setenv("FOO", "a:1")
-	v, _ := osx.GetenvStringMapString("FOO", nil)
+	v, _ := goos.GetenvStringMapString("FOO", nil)
 	fmt.Println(v)
 
 	// Output:
@@ -614,7 +614,7 @@ func ExampleGetenvStringMapString() {
 
 func ExampleGetenvBoolMap() {
 	_ = os.Setenv("FOO", "debug:true, verbose:false")
-	v, _ := osx.GetenvBoolMap("FOO", nil)
+	v, _ := goos.GetenvBoolMap("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -634,7 +634,7 @@ func ExampleGetenvBoolMap() {
 
 func ExampleGetenvIntMap() {
 	_ = os.Setenv("FOO", "a:1, b:2")
-	v, _ := osx.GetenvIntMap("FOO", nil)
+	v, _ := goos.GetenvIntMap("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -654,7 +654,7 @@ func ExampleGetenvIntMap() {
 
 func ExampleGetenvInt8Map() {
 	_ = os.Setenv("FOO", "a:1, b:2")
-	v, _ := osx.GetenvInt8Map("FOO", nil)
+	v, _ := goos.GetenvInt8Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -674,7 +674,7 @@ func ExampleGetenvInt8Map() {
 
 func ExampleGetenvInt16Map() {
 	_ = os.Setenv("FOO", "a:100, b:200")
-	v, _ := osx.GetenvInt16Map("FOO", nil)
+	v, _ := goos.GetenvInt16Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -694,7 +694,7 @@ func ExampleGetenvInt16Map() {
 
 func ExampleGetenvInt32Map() {
 	_ = os.Setenv("FOO", "a:100, b:200")
-	v, _ := osx.GetenvInt32Map("FOO", nil)
+	v, _ := goos.GetenvInt32Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -714,7 +714,7 @@ func ExampleGetenvInt32Map() {
 
 func ExampleGetenvInt64Map() {
 	_ = os.Setenv("FOO", "a:100, b:200")
-	v, _ := osx.GetenvInt64Map("FOO", nil)
+	v, _ := goos.GetenvInt64Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -734,7 +734,7 @@ func ExampleGetenvInt64Map() {
 
 func ExampleGetenvUintMap() {
 	_ = os.Setenv("FOO", "a:1, b:2")
-	v, _ := osx.GetenvUintMap("FOO", nil)
+	v, _ := goos.GetenvUintMap("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -754,7 +754,7 @@ func ExampleGetenvUintMap() {
 
 func ExampleGetenvUint8Map() {
 	_ = os.Setenv("FOO", "a:1, b:2")
-	v, _ := osx.GetenvUint8Map("FOO", nil)
+	v, _ := goos.GetenvUint8Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -774,7 +774,7 @@ func ExampleGetenvUint8Map() {
 
 func ExampleGetenvUint16Map() {
 	_ = os.Setenv("FOO", "a:1, b:2")
-	v, _ := osx.GetenvUint16Map("FOO", nil)
+	v, _ := goos.GetenvUint16Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -794,7 +794,7 @@ func ExampleGetenvUint16Map() {
 
 func ExampleGetenvUint32Map() {
 	_ = os.Setenv("FOO", "a:1, b:2")
-	v, _ := osx.GetenvUint32Map("FOO", nil)
+	v, _ := goos.GetenvUint32Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -814,7 +814,7 @@ func ExampleGetenvUint32Map() {
 
 func ExampleGetenvUint64Map() {
 	_ = os.Setenv("FOO", "a:1, b:2")
-	v, _ := osx.GetenvUint64Map("FOO", nil)
+	v, _ := goos.GetenvUint64Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -834,7 +834,7 @@ func ExampleGetenvUint64Map() {
 
 func ExampleGetenvFloat32Map() {
 	_ = os.Setenv("FOO", "a:1.5, b:2.5")
-	v, _ := osx.GetenvFloat32Map("FOO", nil)
+	v, _ := goos.GetenvFloat32Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -854,7 +854,7 @@ func ExampleGetenvFloat32Map() {
 
 func ExampleGetenvFloat64Map() {
 	_ = os.Setenv("FOO", "a:1.5, b:2.5")
-	v, _ := osx.GetenvFloat64Map("FOO", nil)
+	v, _ := goos.GetenvFloat64Map("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {
@@ -874,7 +874,7 @@ func ExampleGetenvFloat64Map() {
 
 func ExampleGetenvDurationMap() {
 	_ = os.Setenv("FOO", "timeout:5s, interval:100ms")
-	v, _ := osx.GetenvDurationMap("FOO", nil)
+	v, _ := goos.GetenvDurationMap("FOO", nil)
 
 	keys := make([]string, 0, len(v))
 	for k := range v {

@@ -5,7 +5,7 @@ Template string formatting utility.
 ## Import
 
 ```go
-import fmtx "github.com/foomo/go/fmt"
+import gofmt "github.com/foomo/go/fmt"
 ```
 
 ## API
@@ -26,11 +26,11 @@ package main
 import (
 	"fmt"
 
-	fmtx "github.com/foomo/go/fmt"
+	gofmt "github.com/foomo/go/fmt"
 )
 
 func main() {
-	result := fmtx.Tprintf("%{.name} is %{.age} years old", "name", "John", "age", "30")
+	result := gofmt.Tprintf("%{.name} is %{.age} years old", "name", "John", "age", "30")
 	fmt.Println(result)
 	// Output: John is 30 years old
 }

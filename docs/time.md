@@ -5,13 +5,13 @@ Context-aware time utilities, duration parsing, and a controllable clock.
 ## Import
 
 ```go
-import timex "github.com/foomo/go/time"
+import gotime "github.com/foomo/go/time"
 ```
 
 ## Time control
 
 `Now` is a package-level variable (defaulting to `time.Now`) that acts as the application's
-clock. Call `timex.Now()` instead of the standard library `time.Now()` throughout your code,
+clock. Call `gotime.Now()` instead of the standard library `time.Now()` throughout your code,
 then swap the provider to control time — for time travel or deterministic unit test outputs.
 
 ### Now
@@ -20,7 +20,7 @@ then swap the provider to control time — for time travel or deterministic unit
 var Now = time.Now
 ```
 
-The current-time provider. Invoke `timex.Now()` wherever you would call `time.Now()`.
+The current-time provider. Invoke `gotime.Now()` wherever you would call `time.Now()`.
 Reassign it (directly, or via `Static`/`Incremental`) to take control of the clock.
 
 ### Static
@@ -64,22 +64,22 @@ incremental cursor). `NowIncrementalNSec` holds the incremental provider's curre
 ## Example
 
 ```go
-// In production code, always read the clock through timex.Now.
-func stamp() time.Time { return timex.Now() }
+// In production code, always read the clock through gotime.Now.
+func stamp() time.Time { return gotime.Now() }
 
 // In a test, freeze time for deterministic output.
-timex.Static()
+gotime.Static()
 fmt.Println(stamp().UTC().Format(time.RFC3339)) // 2021-01-01T11:00:00Z
 fmt.Println(stamp().UTC().Format(time.RFC3339)) // 2021-01-01T11:00:00Z (unchanged)
 
 // Or advance deterministically, one nanosecond per call.
-timex.Incremental()
+gotime.Incremental()
 a := stamp()
 b := stamp()
 fmt.Println(b.After(a)) // true
 
 // Restore the default clock when done.
-timex.Now = time.Now
+gotime.Now = time.Now
 ```
 
 ## API
@@ -117,7 +117,7 @@ ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 defer cancel()
 
 // Wait for 1 second (completes successfully)
-err := timex.Sleep(ctx, 1*time.Second)
+err := gotime.Sleep(ctx, 1*time.Second)
 if err != nil {
 	fmt.Println("Sleep failed:", err)
 	return
@@ -129,7 +129,7 @@ fmt.Println("Sleep completed successfully")
 ctx2, cancel2 := context.WithTimeout(context.Background(), 2*time.Second)
 defer cancel2()
 
-err = timex.Sleep(ctx2, 3*time.Second)
+err = gotime.Sleep(ctx2, 3*time.Second)
 if err != nil {
 	fmt.Println("Sleep cancelled:", err)
 }
@@ -143,7 +143,7 @@ if err != nil {
 
 ```go
 // Poll a readiness check up to 10s, every 250ms.
-err := timex.WaitFor(ctx, func(ctx context.Context) (bool, error) {
+err := gotime.WaitFor(ctx, func(ctx context.Context) (bool, error) {
 	return service.Ready(ctx), nil
 }, 10*time.Second, 250*time.Millisecond)
 if err != nil {
@@ -155,7 +155,7 @@ if err != nil {
 
 ```go
 for _, s := range []string{"2w", "5d", "1w2d3h"} {
-	d, _ := timex.ParseDuration(s)
+	d, _ := gotime.ParseDuration(s)
 	fmt.Printf("%s = %s\n", s, d)
 }
 

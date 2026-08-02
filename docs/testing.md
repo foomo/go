@@ -5,7 +5,7 @@ Testing utilities including tag-based test filtering, network helpers, and crypt
 ## Import
 
 ```go
-import testingx "github.com/foomo/go/testing"
+import gotesting "github.com/foomo/go/testing"
 import tagx "github.com/foomo/go/testing/tag"
 ```
 
@@ -96,12 +96,12 @@ const (
 
 ```go
 func TestDatabaseIntegration(t *testing.T) {
-	testingx.Tags(t, tagx.Integration)
+	gotesting.Tags(t, tagx.Integration)
 	// test body ...
 }
 
 func TestQuickCheck(t *testing.T) {
-	testingx.Tags(t, tagx.Short)
+	gotesting.Tags(t, tagx.Short)
 	// test body ...
 }
 ```
@@ -142,7 +142,7 @@ A wrapper type that implements the `M` interface. Useful for adapting `testing.M
 
 ```go
 func TestMain(m *testing.M) {
-	goleak.VerifyTestMain(testingx.MFunc(func() int {
+	goleak.VerifyTestMain(gotesting.MFunc(func() int {
 		return m.Run()
 	}))
 }
@@ -160,7 +160,7 @@ Returns a free port on localhost. Calls `tb.Fatal` on error.
 
 ```go
 func TestServer(t *testing.T) {
-	port := testingx.FreePort(t)
+	port := gotesting.FreePort(t)
 	// port = 54321
 }
 ```
@@ -175,7 +175,7 @@ Returns `n` free ports on localhost. Calls `tb.Fatal` on error. All listeners ar
 
 ```go
 func TestCluster(t *testing.T) {
-	ports := testingx.FreePorts(t, 3)
+	ports := gotesting.FreePorts(t, 3)
 	// ports = [54321, 54322, 54323]
 }
 ```
@@ -190,9 +190,9 @@ Waits in parallel for TCP connections to succeed on each of the given localhost 
 
 ```go
 func TestServerStarts(t *testing.T) {
-	port := testingx.FreePort(t)
+	port := gotesting.FreePort(t)
 	go startServer(t, port)
-	testingx.WaitForFreePorts(t, port)
+	gotesting.WaitForFreePorts(t, port)
 	// server is now reachable
 }
 ```
@@ -226,10 +226,10 @@ func GenerateED25519PublicKey(tb testing.TB, privateKey ed25519.PrivateKey, file
 ```go
 func TestJWT(t *testing.T) {
 	// Generate RSA key pair (files cleaned up after test)
-	publicKeyPath, privateKeyPath := testingx.GenerateRSAKeyPair(t)
+	publicKeyPath, privateKeyPath := gotesting.GenerateRSAKeyPair(t)
 
 	// Or generate ED25519 keys
-	edPub, edPriv := testingx.GenerateED25519KeyPair(t)
+	edPub, edPriv := gotesting.GenerateED25519KeyPair(t)
 }
 ```
 
@@ -254,8 +254,8 @@ Implements: `Name`, `Helper`, `Cleanup`, `Fail`, `FailNow`, `Failed`, `Error`, `
 
 ```go
 func ExampleFreePort() {
-	tb := testingx.NewExampleTB()
-	addr := testingx.FreePort(tb)
+	tb := gotesting.NewExampleTB()
+	addr := gotesting.FreePort(tb)
 	fmt.Println(addr)
 }
 ```

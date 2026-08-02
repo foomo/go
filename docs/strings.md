@@ -5,7 +5,7 @@ String manipulation utilities including case conversions, padding, substring rem
 ## Import
 
 ```go
-import stringsx "github.com/foomo/go/strings"
+import gostrings "github.com/foomo/go/strings"
 ```
 
 ## API
@@ -118,44 +118,44 @@ Returns `true` if the string starts (or ends) with any of the provided values. R
 ### Case conversions
 
 ```go
-stringsx.ToCamel("hello_world")         // "HelloWorld"
-stringsx.ToSnake("HelloWorld")           // "hello_world"
-stringsx.ToKebab("HelloWorld")           // "hello-world"
-stringsx.ToScreamingSnake("HelloWorld")  // "HELLO_WORLD"
+gostrings.ToCamel("hello_world")         // "HelloWorld"
+gostrings.ToSnake("HelloWorld")           // "hello_world"
+gostrings.ToKebab("HelloWorld")           // "hello-world"
+gostrings.ToScreamingSnake("HelloWorld")  // "HELLO_WORLD"
 ```
 
 ### Padding
 
 ```go
-fmt.Printf("'%s'", stringsx.PadRight("hello", 10))
+fmt.Printf("'%s'", gostrings.PadRight("hello", 10))
 // Output: 'hello     '
 
-fmt.Printf("'%s'", stringsx.PadLeft("hello", 10))
+fmt.Printf("'%s'", gostrings.PadLeft("hello", 10))
 // Output: '     hello'
 ```
 
 ### RemoveAll
 
 ```go
-result := stringsx.RemoveAll("hello world", "o", "l")
+result := gostrings.RemoveAll("hello world", "o", "l")
 fmt.Println(result) // "he wrd"
 ```
 
 ### Validation
 
 ```go
-stringsx.IsEmpty("")           // true
-stringsx.IsBlank("  \t")      // true
-stringsx.IsAnyEmpty("a", "")  // true
-stringsx.IsAlpha("Hello")     // true
-stringsx.IsAlphanumeric("Go1") // true
-stringsx.IsNumeric("12345")   // true
-stringsx.IsNumerical("3.14")  // true
+gostrings.IsEmpty("")           // true
+gostrings.IsBlank("  \t")      // true
+gostrings.IsAnyEmpty("a", "")  // true
+gostrings.IsAlpha("Hello")     // true
+gostrings.IsAlphanumeric("Go1") // true
+gostrings.IsNumeric("12345")   // true
+gostrings.IsNumerical("3.14")  // true
 ```
 
 ### Prefix / Suffix
 
 ```go
-stringsx.HasAnyPrefix("/api/users", "/api", "/admin") // true
-stringsx.HasAnySuffix("image.png", ".jpg", ".png")    // true
+gostrings.HasAnyPrefix("/api/users", "/api", "/admin") // true
+gostrings.HasAnySuffix("image.png", ".jpg", ".png")    // true
 ```

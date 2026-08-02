@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"testing"
 
-	pkgerrors "github.com/foomo/go/errors"
+	goerrors "github.com/foomo/go/errors"
 )
 
 func ExampleAsAny() {
@@ -19,7 +19,7 @@ func ExampleAsAny() {
 	)
 
 	_, err := os.Open("/nonexistent/path/for/example")
-	fmt.Println(pkgerrors.AsAny(err, &numErr, &pathErr))
+	fmt.Println(goerrors.AsAny(err, &numErr, &pathErr))
 	// Output: true
 }
 
@@ -79,7 +79,7 @@ func TestAsAny(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := pkgerrors.AsAny(tt.err, tt.targets()...); got != tt.want {
+			if got := goerrors.AsAny(tt.err, tt.targets()...); got != tt.want {
 				t.Errorf("AsAny() = %v, want %v", got, tt.want)
 			}
 		})
@@ -90,7 +90,7 @@ func TestAsAny(t *testing.T) {
 			numErr  *strconv.NumError
 			pathTgt *fs.PathError
 		)
-		if !pkgerrors.AsAny(pathErr, &numErr, &pathTgt) {
+		if !goerrors.AsAny(pathErr, &numErr, &pathTgt) {
 			t.Fatal("AsAny() = false, want true")
 		}
 

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	netx "github.com/foomo/go/net"
+	gonet "github.com/foomo/go/net"
 	"github.com/stretchr/testify/require"
 )
 
@@ -38,25 +38,25 @@ func TestWaitFor(t *testing.T) {
 		<-done
 	})
 
-	require.NoError(t, netx.WaitFor(t.Context(), "tcp", l.Addr().String(), time.Second))
+	require.NoError(t, gonet.WaitFor(t.Context(), "tcp", l.Addr().String(), time.Second))
 }
 
 func TestWaitFor_Timeout(t *testing.T) {
 	t.Parallel()
 
-	port, err := netx.FreePort(t.Context())
+	port, err := gonet.FreePort(t.Context())
 	require.NoError(t, err)
 
 	addr := stdnet.JoinHostPort("127.0.0.1", strconv.Itoa(port))
 
-	err = netx.WaitFor(t.Context(), "tcp", addr, 200*time.Millisecond)
+	err = gonet.WaitFor(t.Context(), "tcp", addr, 200*time.Millisecond)
 	require.ErrorIs(t, err, context.DeadlineExceeded)
 }
 
 func TestWaitFor_CanceledContext(t *testing.T) {
 	t.Parallel()
 
-	port, err := netx.FreePort(t.Context())
+	port, err := gonet.FreePort(t.Context())
 	require.NoError(t, err)
 
 	addr := stdnet.JoinHostPort("127.0.0.1", strconv.Itoa(port))
@@ -68,6 +68,6 @@ func TestWaitFor_CanceledContext(t *testing.T) {
 		cancel()
 	}()
 
-	err = netx.WaitFor(ctx, "tcp", addr, time.Second)
+	err = gonet.WaitFor(ctx, "tcp", addr, time.Second)
 	require.ErrorIs(t, err, context.Canceled)
 }

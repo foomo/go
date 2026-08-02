@@ -5,7 +5,7 @@ Network utilities — free port allocation and TCP connection wait helpers.
 ## Import
 
 ```go
-import netx "github.com/foomo/go/net"
+import gonet "github.com/foomo/go/net"
 ```
 
 ## API
@@ -61,20 +61,20 @@ import (
 	"log"
 	"time"
 
-	netx "github.com/foomo/go/net"
+	gonet "github.com/foomo/go/net"
 )
 
 func main() {
 	ctx := context.Background()
 
-	port, err := netx.FreePort(ctx)
+	port, err := gonet.FreePort(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(port) // e.g. 54321
 
 	// Wait for a service to come up on the port (max 5s).
-	if err := netx.WaitForFreePort(ctx, port, 5*time.Second); err != nil {
+	if err := gonet.WaitForFreePort(ctx, port, 5*time.Second); err != nil {
 		log.Fatal(err)
 	}
 }

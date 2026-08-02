@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	testingx "github.com/foomo/go/testing"
+	gotesting "github.com/foomo/go/testing"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -16,7 +16,7 @@ import (
 func TestGenerateED25519KeyPair(t *testing.T) {
 	t.Parallel()
 
-	publicPath, privatePath := testingx.GenerateED25519KeyPair(t)
+	publicPath, privatePath := gotesting.GenerateED25519KeyPair(t)
 
 	require.FileExists(t, publicPath)
 	require.FileExists(t, privatePath)
@@ -45,9 +45,9 @@ func TestGenerateED25519KeyPair(t *testing.T) {
 func TestEncodeED25519Keys(t *testing.T) {
 	t.Parallel()
 
-	privateKey := testingx.GenerateED25519PrivateKey(t)
+	privateKey := gotesting.GenerateED25519PrivateKey(t)
 
-	privatePEM := testingx.EncodeED25519PrivateKey(t, privateKey)
+	privatePEM := gotesting.EncodeED25519PrivateKey(t, privateKey)
 	block, _ := pem.Decode([]byte(privatePEM))
 	require.NotNil(t, block)
 	assert.Equal(t, "PRIVATE KEY", block.Type)
@@ -55,7 +55,7 @@ func TestEncodeED25519Keys(t *testing.T) {
 	publicKey, ok := privateKey.Public().(ed25519.PublicKey)
 	require.True(t, ok)
 
-	publicPEM := testingx.EncodeED25519PublicKey(t, publicKey)
+	publicPEM := gotesting.EncodeED25519PublicKey(t, publicKey)
 	block, _ = pem.Decode([]byte(publicPEM))
 	require.NotNil(t, block)
 	assert.Equal(t, "PUBLIC KEY", block.Type)
@@ -64,10 +64,10 @@ func TestEncodeED25519Keys(t *testing.T) {
 func TestGenerateED25519PublicKey(t *testing.T) {
 	t.Parallel()
 
-	privateKey := testingx.GenerateED25519PrivateKey(t)
+	privateKey := gotesting.GenerateED25519PrivateKey(t)
 	path := filepath.Join(t.TempDir(), "id_ed25519.pub")
 
-	testingx.GenerateED25519PublicKey(t, privateKey, path)
+	gotesting.GenerateED25519PublicKey(t, privateKey, path)
 
 	require.FileExists(t, path)
 

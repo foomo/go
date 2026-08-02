@@ -5,7 +5,7 @@ Helpers extending the standard `errors` package.
 ## Import
 
 ```go
-import errorsx "github.com/foomo/go/errors"
+import goerrors "github.com/foomo/go/errors"
 ```
 
 ## API
@@ -37,7 +37,7 @@ var (
 )
 
 _, err := os.Open("/nonexistent/path")
-if errorsx.AsAny(err, &numErr, &pathErr) {
+if goerrors.AsAny(err, &numErr, &pathErr) {
 	// err unwrapped into one of the targets
 }
 ```
@@ -46,7 +46,7 @@ if errorsx.AsAny(err, &numErr, &pathErr) {
 
 ```go
 err := fmt.Errorf("wrapped: %w", io.EOF)
-if errorsx.IsAny(err, context.Canceled, io.EOF) {
+if goerrors.IsAny(err, context.Canceled, io.EOF) {
 	// err matches one of the sentinels
 }
 ```
