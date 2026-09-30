@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// Build applies a slice of functions to a value.
+// Build applies every [Option] collected by each non-nil builder to v, in order.
 func Build[T any](v T, builders ...interface{ List() []Option[T] }) {
 	for _, b := range builders {
 		if b != nil {

@@ -12,7 +12,7 @@ Go standard library extension, adding the missing parts used in the foomo ecosys
 
 ## Features
 
-- **errors** — Variadic match helpers (`AsAny`, `IsAny`) wrapping `errors.As` / `errors.Is`
+- **errors** — Variadic match helpers (`AsAny`, `AsAnyType`, `IsAny`) wrapping `errors.As` / `errors.Is`; `Cause` unwraps through `types.Causer`
 - **fmt** — Template string formatting with `%{.key}` syntax
 - **net** — Free port allocation and TCP connection wait helpers (`FreePort`, `FreePorts`, `WaitFor`, `WaitForFreePort`)
 - **options** — Generic functional options pattern (`Option`, `OptionE`, `Builder`, `BuilderE`)
@@ -24,7 +24,7 @@ Go standard library extension, adding the missing parts used in the foomo ecosys
 - **strings** — Case conversions, padding, validation, prefix/suffix matching, and composition
 - **testing** — Tag-based test filtering via `GO_TEST_TAGS`, crypto key helpers, `ExampleTB`
 - **time** — Context-aware `Sleep` and polling `WaitFor`; `ParseDuration` (adds `d`/`w` units); swappable `Now` clock for deterministic and time-travel tests (`Static`, `Incremental`)
-- **types** — Common interface contracts (`Closer`, `Starter`, `Stopper`, …) with function adapters and `As<X>` helpers
+- **types** — Common interface contracts (`Closer`, `Starter`, `Stopper`, `Causer`, …) with function adapters and `As<X>` helpers
 
 ## How to Contribute
 

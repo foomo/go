@@ -8,6 +8,8 @@ import (
 	tagx "github.com/foomo/go/testing/tag"
 )
 
+// EnvTestTags is the environment variable Tags and SkipTags read for the
+// comma-separated list of tags to include or, prefixed with "-", exclude.
 const EnvTestTags = "GO_TEST_TAGS"
 
 // Tags defines the tags that the test should run under.

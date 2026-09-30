@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// FreePort returns a free port on localhost
+// FreePort returns a free port on localhost, failing tb if none is available.
 func FreePort(tb testing.TB) int {
 	tb.Helper()
 
@@ -19,7 +19,7 @@ func FreePort(tb testing.TB) int {
 	return port
 }
 
-// FreePorts returns a free ports on localhost
+// FreePorts returns n free ports on localhost, failing tb if not all are available.
 func FreePorts(tb testing.TB, n int) []int {
 	tb.Helper()
 
@@ -29,7 +29,8 @@ func FreePorts(tb testing.TB, n int) []int {
 	return ports
 }
 
-// WaitForFreePorts returns a free port on localhost
+// WaitForFreePorts blocks until each of ports becomes free on localhost,
+// failing tb if any does not become free within 10 seconds.
 func WaitForFreePorts(tb testing.TB, ports ...int) {
 	tb.Helper()
 

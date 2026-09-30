@@ -90,8 +90,7 @@ func ExampleRecover() {
 		panic("something went wrong")
 	})
 
-	var pe *runtime.PanicError
-	if errors.As(err, &pe) {
+	if pe, ok := errors.AsType[*runtime.PanicError](err); ok {
 		fmt.Println(pe.Value)
 	}
 

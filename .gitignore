@@ -1,36 +1,38 @@
 .*
+*.lock
 *.log
 *.pid
 *.retry
+*.tar
 *.out
 *.tgz
 *.zip
+*.key
 *.pem
-bin/
-tmp/
+*.prof
+*.pprof
+*.profile
+/bin/
+/dist/
+/vendor/
+/tmp/
+
+## GitHub
+!.github/
+
+## Editorconfig
+!.editorconfig
 
 ## Git
 !.gitkeep
 !.gitignore
 !.gitattributes
 
-## GitHub
-!.github/
-
 ## Mise
 !.mise.toml
 
 ## Lefthook
 !.lefthook.yaml
-
-## VSCode
-!.vscode/
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.default.json
-
-## Editorconfig
-!.editorconfig
 
 ## Golang
 go.work
@@ -39,7 +41,6 @@ go.work.sum
 !.goreleaser.yaml
 
 ## Node
-!.npmrc
 **/node_modules/
 
 ## TypeScript

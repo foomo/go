@@ -11,12 +11,12 @@ type (
 	}
 )
 
-// List returns the collected options.
+// List returns the options collected in b.Opts.
 func (b *Builder[T]) List() []Option[T] {
 	return b.Opts
 }
 
-// List returns the collected options.
+// List returns the options collected in b.Opts.
 func (b *BuilderE[T]) List() []OptionE[T] {
 	return b.Opts
 }

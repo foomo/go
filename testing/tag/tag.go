@@ -3,6 +3,8 @@ package tag
 // Tag represents a type for categorizing tasks, processes, or features using predefined string identifiers.
 type Tag string
 
+// Predefined tags for use with [github.com/foomo/go/testing.Tags] and
+// [github.com/foomo/go/testing.SkipTags].
 const (
 	Always      Tag = "always"
 	Benchmark   Tag = "benchmark"
@@ -34,7 +36,7 @@ const (
 	Update      Tag = "update"
 )
 
-// String returns the string representation
+// String returns the string representation of t.
 func (t Tag) String() string {
 	return string(t)
 }
