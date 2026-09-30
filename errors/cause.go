@@ -14,9 +14,9 @@ func Cause(err error) error {
 
 		nextErr := causerErr.Cause()
 
-		// if Cause() returns the same error instance,
+		// if Cause() returns nil or the same error instance,
 		// we have reached the root. Break to avoid an infinite loop.
-		if nextErr == err { //nolint:errorlint // explizit comparison
+		if nextErr == nil || nextErr == err { //nolint:errorlint // explizit comparison
 			break
 		}
 
