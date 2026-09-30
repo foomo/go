@@ -82,6 +82,16 @@ type Unsubscriber interface {
 
 Adapters: `UnsubscribeFunc`, `UnsubscribeFuncErr`, `UnsubscribeFuncCtx`, `UnsubscribeFuncCtxErr`. Helper: `AsUnsubscriber`.
 
+### Causer
+
+```go
+type Causer interface {
+	Cause() error
+}
+```
+
+Implemented by errors that wrap an underlying cause, distinct from the chain unwrapped by `errors.Unwrap`. Adapter: `CauserFunc`. See [`errors.Cause`](/errors#cause) for unwrapping through a chain of `Causer`s.
+
 ### Namer
 
 ```go
