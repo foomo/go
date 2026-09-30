@@ -10,8 +10,8 @@ linters:
   default: all
   disable:
     # Project specific linters
-    - tparallel
-    - paralleltest
+    - tparallel # conflicts with paralleltest below; both address t.Parallel() placement
+    - paralleltest # t.Parallel() placement left to reviewer judgement
     # Discouraged linters
     - noinlineerr # Disallows inline error handling (`if err := ...; err != nil {`).
     - embeddedstructfieldcheck #  Embedded types should be at the top of the field list of a struct, and there must be an empty line separating embedded fields from regular fields. [fast]
@@ -20,9 +20,8 @@ linters:
     - dogsled # Checks assignments with too many blank identifiers (e.g. x, _, _, _, := f()) [fast: true, auto-fix: false]
     - dupl # Tool for code clone detection [fast: true, auto-fix: false]
     - dupword # checks for duplicate words in the source code [fast: true, auto-fix: false]
-    - dogsled # Checks assignments with too many blank identifiers (e.g. x, _, _, _, := f()) [fast: true, auto-fix: false]
     - err113 # Go linter to check the errors handling expressions [fast: false, auto-fix: false]
-    - exhaustruct # Checks if all structure fields are initialized [fast: false, auto-fix: false]
+    - exhaustruct_v5 # Checks if all structure fields are initialized [fast: false, auto-fix: false]
     - funlen # Tool for detection of long functions [fast: true, auto-fix: false]
     - ginkgolinter # enforces standards of using ginkgo and gomega [fast: false, auto-fix: false]
     - gochecknoglobals # Check that no global variables exist. [fast: false, auto-fix: false]
@@ -49,12 +48,21 @@ linters:
     - varnamelen # checks that the length of a variable's name matches its scope [fast: false, auto-fix: false]
     - wrapcheck # Checks that errors returned from external packages are wrapped [fast: false, auto-fix: false]
     - zerologlint # Detects the wrong usage of `zerolog` that a user forgets to dispatch with `Send` or `Msg` [fast: false, auto-fix: false]
-    # Deprected linters
-    - gomodguard
-    - wsl
+    # Deprecated linters — successors stay enabled
+    - exhaustruct # replaced by exhaustruct_v5
+    - gomodguard # replaced by gomodguard_v2 (deprecated v2.12.0)
+    - wsl # replaced by wsl_v5 (deprecated v2.2.0)
 
   # https://golangci-lint.run/docs/linters/
   settings:
+    # https://golangci-lint.run/docs/linters/configuration/#forbidigo
+    forbidigo:
+      forbid:
+        # default
+        - pattern: ^(fmt\.Print(|f|ln)|print|println)$
+        - pattern: ^errors\.Cause$
+          pkg: ^github.com/pkg/errors$
+          msg: "Use github.com/foomo/go/errors.Cause() or standard library errors.As() or errors.Unwrap() instead."
     # https://golangci-lint.run/docs/linters/configuration/#importas
     importas:
       alias:
@@ -92,6 +100,8 @@ linters:
         - name: package-comments
           disabled: true
   exclusions:
+    generated: lax
+    warn-unused: true
     presets:
       - comments
       - common-false-positives
@@ -104,9 +114,10 @@ linters:
           - unused
           - gosec
     paths:
-      - tmp
-      - examples
+      - tmp$
+      - examples$
+
 formatters:
   enable:
-    - gofmt
+    - gofumpt
     - goimports
