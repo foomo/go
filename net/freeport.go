@@ -8,7 +8,9 @@ import (
 	"time"
 )
 
-// FreePort returns a free port on localhost
+// FreePort returns a port on localhost that is currently unused, by briefly
+// binding to port 0 and releasing it. The port can be claimed by another
+// process before the caller uses it.
 func FreePort(ctx context.Context) (int, error) {
 	ports, err := FreePorts(ctx, 1)
 	if err != nil {
@@ -18,7 +20,10 @@ func FreePort(ctx context.Context) (int, error) {
 	return ports[0], nil
 }
 
-// FreePorts returns a free port on localhost
+// FreePorts returns n distinct ports on localhost that are currently unused,
+// by briefly binding to n separate port-0 listeners and releasing them all.
+// It returns nil, nil if n <= 0. The ports can be claimed by another process
+// before the caller uses them.
 func FreePorts(ctx context.Context, n int) ([]int, error) {
 	if n <= 0 {
 		return nil, nil
@@ -57,7 +62,9 @@ func FreePorts(ctx context.Context, n int) ([]int, error) {
 	return ports, nil
 }
 
-// IsFreePort checks if a specific port is available on localhost
+// IsFreePort reports whether port is currently unused on localhost, by
+// attempting to bind to it and immediately releasing it. It returns a non-nil
+// error if the port is already in use or cannot be bound.
 func IsFreePort(ctx context.Context, port int) error {
 	addr := net.JoinHostPort("127.0.0.1", strconv.Itoa(port))
 

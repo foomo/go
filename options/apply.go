@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// Apply applies a slice of functions to a value.
+// Apply calls each non-nil opt with v, applying every option in order.
 func Apply[T any](v T, opts ...Option[T]) {
 	for _, opt := range opts {
 		if opt != nil {
