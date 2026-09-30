@@ -461,32 +461,46 @@ func getenvMap[T any](key string, def map[string]T, parse func(string) (T, error
 // --------------------------------- parsers ----------------------------------
 
 func parseString(s string) (string, error) { return s, nil }
-func parseBool(s string) (bool, error)     { return strconv.ParseBool(s) }
-func parseInt(s string) (int, error)       { return strconv.Atoi(s) }
-func parseInt8(s string) (int8, error)     { v, err := strconv.ParseInt(s, 0, 8); return int8(v), err }
-func parseInt16(s string) (int16, error)   { v, err := strconv.ParseInt(s, 0, 16); return int16(v), err }
-func parseInt32(s string) (int32, error)   { v, err := strconv.ParseInt(s, 0, 32); return int32(v), err }
-func parseInt64(s string) (int64, error)   { v, err := strconv.ParseInt(s, 0, 64); return v, err }
+
+func parseBool(s string) (bool, error) { return strconv.ParseBool(s) }
+
+func parseInt(s string) (int, error) { return strconv.Atoi(s) }
+
+func parseInt8(s string) (int8, error) { v, err := strconv.ParseInt(s, 0, 8); return int8(v), err }
+
+func parseInt16(s string) (int16, error) { v, err := strconv.ParseInt(s, 0, 16); return int16(v), err }
+
+func parseInt32(s string) (int32, error) { v, err := strconv.ParseInt(s, 0, 32); return int32(v), err }
+
+func parseInt64(s string) (int64, error) { v, err := strconv.ParseInt(s, 0, 64); return v, err }
+
 func parseUint(s string) (uint, error) {
 	v, err := strconv.ParseUint(s, 0, strconv.IntSize)
 	return uint(v), err
 }
+
 func parseUint8(s string) (uint8, error) { v, err := strconv.ParseUint(s, 0, 8); return uint8(v), err }
+
 func parseUint16(s string) (uint16, error) {
 	v, err := strconv.ParseUint(s, 0, 16)
 	return uint16(v), err
 }
+
 func parseUint32(s string) (uint32, error) {
 	v, err := strconv.ParseUint(s, 0, 32)
 	return uint32(v), err
 }
+
 func parseUint64(s string) (uint64, error) {
 	v, err := strconv.ParseUint(s, 0, 64)
 	return v, err
 }
+
 func parseFloat32(s string) (float32, error) {
 	v, err := strconv.ParseFloat(s, 32)
 	return float32(v), err
 }
-func parseFloat64(s string) (float64, error)        { return strconv.ParseFloat(s, 64) }
+
+func parseFloat64(s string) (float64, error) { return strconv.ParseFloat(s, 64) }
+
 func parseDuration(s string) (time.Duration, error) { return time.ParseDuration(s) }
