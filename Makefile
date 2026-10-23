@@ -32,7 +32,7 @@ endif
 
 .PHONY: check
 ## Run lint & tests
-check: tidy generate lint.fix test.race audit
+check: tidy generate actionlint lint.fix test.race audit
 
 .PHONY: lint
 ## Run linter
@@ -56,24 +56,24 @@ generate:
 ## Run tests
 test:
 	@echo "〉go test"
-	@GO_TEST_TAGS=-skip go test -v -tags=safe -shuffle=on -coverprofile=coverage.out ./...
+	@GO_TEST_TAGS=-skip gotestsum -- -tags=safe -shuffle=on -coverprofile=coverage.out ./...
 
 .PHONY: test.race
 ## Run tests with -race
 test.race:
 	@echo "〉go test -race"
-	@GO_TEST_TAGS=-skip go test -v -tags=safe -shuffle=on -coverprofile=coverage.out -race ./...
+	@GO_TEST_TAGS=-skip gotestsum -- -tags=safe -shuffle=on -coverprofile=coverage.out -race ./...
 
 .PHONY: test.update
 ## Run tests with -update
 test.update:
 	@echo "〉go test -update"
-	@GO_TEST_TAGS=-skip go test -v -tags=safe -shuffle=on -coverprofile=coverage.out -update ./...
+	@GO_TEST_TAGS=-skip gotestsum -- -tags=safe -shuffle=on -coverprofile=coverage.out -update ./...
 
 .PHONY: test.bench
 ## Run tests with -bench
 test.bench:
-	@GO_TEST_TAGS=-skip go test -tags=safe -bench=. -benchmem ./...
+	@GO_TEST_TAGS=-skip gotestsum -- -tags=safe -bench=. -benchmem ./...
 
 ### Security
 
@@ -81,7 +81,7 @@ test.bench:
 ## Run security audit
 audit:
 	@echo "〉security audit"
-	@govulncheck ./...
+	@osv-scanner --call-analysis=all --config=.osv-scanner.toml $(if $(GITHUB_ACTIONS),--format=gh-annotations) -r .
 
 ### Dependencies
 
@@ -95,13 +95,13 @@ tidy:
 ## Show outdated direct dependencies
 outdated:
 	@echo "〉go mod outdated"
-	@go-mod-upgrade --list
+	@go-mod-upgrade --cooldown 7d --list
 
 .PHONY: upgrade
-## Show outdated direct dependencies
+## Upgrade direct dependencies
 upgrade:
 	@echo "〉go mod upgrade"
-	@go-mod-upgrade
+	@go-mod-upgrade --cooldown 7d
 	@$(MAKE) tidy
 
 ### Documentation
@@ -125,6 +125,11 @@ godocs:
 	@go doc -http
 
 ### Utils
+
+.PHONY: actionlint
+## Run actionlint
+actionlint:
+	@actionlint
 
 .PHONY: help
 # https://patorjk.com/software/taag/#p=display&f=Future+Smooth&t=go&x=none&v=4&h=4&w=80&we=false

@@ -51,3 +51,8 @@ go.work.sum
 docs/.vitepress/*
 !docs/.vitepress/theme/
 !docs/.vitepress/config.mts
+
+.projectmem/events.jsonl
+.projectmem/watch.pid
+.projectmem/watch.log
+.projectmem/structure.json
